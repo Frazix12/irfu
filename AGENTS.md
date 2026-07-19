@@ -93,3 +93,160 @@ Do not add Instagram or YouTube. The Hire Me CTA opens email; WhatsApp is second
 - Public location is **Dhaka, Bangladesh**; do not use the older “My Basement” wording.
 - LinkedIn blocks automated fetching. Treat the owner-provided headline, About copy, experience, and education above as authoritative.
 - Ask Irfan before publishing any new personal detail not recorded here.
+
+## Source Authority and Research Record
+
+This context was consolidated on **2026-07-19** from Irfan's direct answers,
+the two portfolio sites, public GitHub repositories/API data, and the Zepa
+component registry. Future agents should not repeat discovery or ask Irfan for
+facts already recorded in this file unless he says something changed.
+
+Source precedence:
+
+1. Irfan's direct statements recorded in this file.
+2. `DESIGN.md` and the approved design/spec documents in this repository.
+3. Current project data in `lib/portfolio.ts`.
+4. Public repositories and product sites.
+5. Historical portfolio copy only as a last-resort reference.
+
+LinkedIn automated access returns HTTP 999. Do not retry scraping it. The
+headline, About copy, founder experience, and education in this file were
+provided directly by Irfan and are authoritative.
+
+Research references:
+
+- Current portfolio: <https://irfu.ami.bd/>
+- Previous portfolio: <https://frazix.vercel.app/>
+- GitHub profile: <https://github.com/Frazix12>
+- LinkedIn: <https://www.linkedin.com/in/irfan-nig>
+- Cube component: <https://zepa.design/components/cube-unicorn>
+- Cube registry: <https://zepa.design/r/cube-unicorn.json>
+
+Historical data that must not override current decisions:
+
+- The old portfolio described Irfan as “Developer / Designer / Gamer” and
+  listed Instagram and YouTube. Do not restore that positioning or those links.
+- GitHub's “My Basement!” location is intentionally superseded by
+  **Dhaka, Bangladesh**.
+- GitHub stars, follower counts, repository counts, and product-user counts are
+  volatile. Do not publish them without fresh confirmation.
+- Older projects such as aesthetic-login, Mesh Blur, OP Clock, Phone UI, and
+  Ferrite Transformer Calculator are not featured work.
+
+## Approved Design Plan
+
+The deterministic `gpt-taste` pre-flight used seed `89` and selected:
+
+- **Hero:** Cinematic Center.
+- **Typeface:** Outfit.
+- **Components:** Horizontal Accordions, Feedback/Testimonial Carousel, and
+  Inline Typography Images.
+- **GSAP paradigms:** Image Scale & Fade Scroll and Card Stacking.
+
+The testimonial selection is represented only by an empty hidden structure.
+Do not render a testimonial section until Irfan supplies genuine quotes.
+
+Hero requirements:
+
+- The Cube Unicorn is the first major visual immediately below the navigation
+  and part of the hero—not a later decorative section.
+- Working headline: **I build digital products and physical systems.**
+- H1 uses `max-w-6xl`; target two lines on desktop and no more than three lines
+  at 320px mobile width.
+- Use exactly two high-contrast hero actions: Hire Me and Selected Work.
+- Do not add stamps, badges, skill pills, stats, or technology lists to the
+  hero.
+
+Featured-project bento math is fixed at 12 columns × 2 rows = 24 cells:
+
+- BTEB Flow: 7 × 2 = 14 cells.
+- AmarHisab: 5 × 1 = 5 cells.
+- SMD Rework Station: 3 × 1 = 3 cells.
+- DIY Soldering Station: 2 × 1 = 2 cells.
+- Total: 14 + 5 + 3 + 2 = 24; use dense grid flow with no empty cell.
+
+## Current Implementation State
+
+The production portfolio is implemented on `main`.
+
+Key files:
+
+- `app/page.tsx` — Server Component containing navigation, hero, capability
+  marquee, featured bento, inline-image field statement, horizontal project
+  accordion, stacked project stories, hiring CTA, and footer.
+- `app/layout.tsx` — Outfit/Geist Mono fonts and static SEO metadata.
+- `app/globals.css` — Figma-inspired tokens, responsive layout, focus styles,
+  flat pastel blocks, and reduced-motion rules.
+- `components/cube-unicorn.tsx` — client-only Unicorn Studio scene with WebGL,
+  error, loading, and reduced-motion fallbacks.
+- `components/portfolio-motion.tsx` — scoped GSAP ScrollTrigger image
+  scale/fade and card-stacking behavior.
+- `lib/portfolio.ts` — authoritative render-time project, capability, social,
+  and empty-testimonial data.
+- `public/unicorn/cube-unicorn.json` — local Zepa Unicorn Studio scene.
+- `public/projects/` — verified local screenshots from the featured project
+  repositories. The soldering-station JPEG has been re-encoded with metadata
+  removed.
+
+Runtime dependencies:
+
+- Next.js `16.2.10`, React/React DOM `19.2.4`.
+- GSAP and `@gsap/react`.
+- `unicornstudio-react`.
+- Tailwind CSS 4.
+- Vitest for content-contract tests.
+
+Do not re-add `framer-motion`; it was removed because the final implementation
+does not use it.
+
+Implementation commits:
+
+- `e44b7c8` — portfolio content contract and verified assets.
+- `da313c0` — cinematic portfolio implementation.
+- `39abc0c` — hero-width and secondary-CTA corrections.
+- `869a852` — mobile hero line-count correction.
+- `61de8a9` — landmark, focus, dependency, and image-privacy fixes.
+- `b241ac6` — implementation plan documentation.
+
+## Verification Baseline
+
+The latest completed validation passed:
+
+```bash
+bunx vitest run
+bun run lint
+bunx tsc --noEmit
+bun run build
+```
+
+Expected baseline:
+
+- Vitest: 1 file, 3 tests passing.
+- ESLint: no errors.
+- TypeScript: no errors.
+- Next build: successful static output for `/` and `/_not-found`.
+
+Browser validation completed at 1440×1000 and 375×812:
+
+- Desktop H1 renders in two lines.
+- Mobile H1 renders in three lines.
+- No horizontal overflow.
+- Unicorn Studio creates a live canvas on WebGL-capable desktop.
+- Reduced-motion mobile receives the static cube fallback.
+- Project images load after entering the viewport.
+- Header and footer sit outside the main landmark.
+- Project-media links and accordion summaries show a visible 3px inset focus
+  outline.
+- Browser page errors and console errors were empty.
+
+## Git and Deployment State
+
+- Current branch: `main`.
+- No Git remote was configured when last checked. A future push requires the
+  repository URL or explicit approval to create a repository.
+- Do not stage or delete unrelated local design/tool inputs such as
+  `.agents/`, `DESIGN.md`, `DEASIGN.html`, `skills-lock.json`, `.superpowers/`,
+  or `.pi-subagents/` unless Irfan explicitly requests it.
+- The public deployment target is not yet recorded. Ask only for the repository
+  or deployment destination when needed; do not repeat the personal-data
+  interview.
