@@ -54,9 +54,12 @@ function OpeningScene() {
 					Full-Stack Developer · Dhaka, Bangladesh
 				</p>
 				<h1 id="hero-title">
-					{heroWords.map((word) => (
+					{heroWords.map((word, index) => (
 						<span className="title-word-mask" key={word}>
-							<span data-opening-word>{word}</span>
+							<span data-opening-word>
+								{word}
+								{index < heroWords.length - 1 ? " " : null}
+							</span>
 						</span>
 					))}
 				</h1>

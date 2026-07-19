@@ -50,6 +50,13 @@ describe("cinematic portfolio structure", () => {
 		expect(html).toContain("data-contact");
 	});
 
+	it("preserves whitespace in the server-rendered hero heading", () => {
+		const heading = html.match(/<h1[^>]*>(.*?)<\/h1>/)?.[1];
+		expect(heading?.replace(/<[^>]+>/g, "")).toBe(
+			"I build digital products and physical systems.",
+		);
+	});
+
 	it("renders each featured project once and in approved order", () => {
 		expect(html.match(/data-project-scene=/g)).toHaveLength(4);
 		const positions = projectSlugs.map((slug) => {
