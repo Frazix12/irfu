@@ -56,6 +56,11 @@ a {
   outline-offset: 4px;
 }
 
+.media-link:focus-visible,
+.accordion-item summary:focus-visible {
+  outline-offset: -3px;
+}
+
 .site-footer :focus-visible,
 .tone-navy :focus-visible {
   outline-color: var(--canvas);

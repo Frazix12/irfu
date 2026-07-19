@@ -282,8 +282,8 @@ function SiteFooter({ links }: { links: typeof socialLinks }) {
 export default function Home() {
   return (
     <MotionRoot>
+      <SiteNav />
       <main className="w-full max-w-full overflow-x-hidden">
-        <SiteNav />
         <Hero />
         <CapabilityMarquee />
         <ProjectBento projects={projects} />
@@ -291,8 +291,8 @@ export default function Home() {
         <ProjectStack projects={projects} />
         <TestimonialStructure />
         <ContactSection links={socialLinks} />
-        <SiteFooter links={socialLinks} />
       </main>
+      <SiteFooter links={socialLinks} />
     </MotionRoot>
   );
 }
