@@ -7,8 +7,7 @@ export type Project = {
 	imageAlt: string;
 	href: string;
 	demo?: string;
-	tone: "lime" | "lilac" | "coral" | "navy";
-	gridClass: string;
+	tone: "lilac" | "mint" | "coral" | "navy";
 };
 
 export const projects: Project[] = [
@@ -22,8 +21,7 @@ export const projects: Project[] = [
 		imageAlt: "BTEB Flow routine interface",
 		href: "https://github.com/Frazix12/btebflow",
 		demo: "https://btebflow.vercel.app/",
-		tone: "lime",
-		gridClass: "md:col-span-7 md:row-span-2",
+		tone: "lilac",
 	},
 	{
 		slug: "amar-hisab",
@@ -34,8 +32,7 @@ export const projects: Project[] = [
 		image: "/projects/amar-hisab.png",
 		imageAlt: "AmarHisab expense dashboard",
 		href: "https://github.com/Frazix12/AmarHisab",
-		tone: "lilac",
-		gridClass: "md:col-span-5",
+		tone: "mint",
 	},
 	{
 		slug: "smd-rework-station",
@@ -48,7 +45,6 @@ export const projects: Project[] = [
 		href: "https://github.com/Frazix12/SMD-Rework-Station",
 		demo: "https://smd-station.vercel.app/",
 		tone: "coral",
-		gridClass: "md:col-span-3",
 	},
 	{
 		slug: "diy-soldering-station",
@@ -59,7 +55,6 @@ export const projects: Project[] = [
 		imageAlt: "Completed DIY soldering station",
 		href: "https://github.com/Frazix12/SolderingStation",
 		tone: "navy",
-		gridClass: "md:col-span-2",
 	},
 ];
 

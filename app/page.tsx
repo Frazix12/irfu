@@ -6,9 +6,12 @@ import {
 	capabilities,
 	projects,
 	socialLinks,
-	testimonials,
 	type Project,
 } from "@/lib/portfolio";
+
+const heroWords = "I build digital products and physical systems.".split(" ");
+const identityWords =
+	"From screen to circuit, I build the systems between.".split(" ");
 
 function SiteNav() {
 	return (
@@ -30,10 +33,7 @@ function SiteNav() {
 						<Link href="#contact">Contact</Link>
 					</div>
 				</details>
-				<Link
-					className="button button-primary nav-hire"
-					href={socialLinks[0].href}
-				>
+				<Link className="button button-light nav-hire" href={socialLinks[0].href}>
 					Hire Me
 				</Link>
 			</nav>
@@ -41,39 +41,60 @@ function SiteNav() {
 	);
 }
 
-function Hero() {
+function OpeningScene() {
 	return (
-		<section className="hero" id="top" aria-labelledby="hero-title">
-			<p className="eyebrow">Full-Stack Developer · Dhaka, Bangladesh</p>
-			<h1 id="hero-title" className="max-w-6xl">
-				I build digital products and physical systems.
-			</h1>
-			<div className="hero-actions">
-				<Link className="button button-primary" href={socialLinks[0].href}>
-					Hire Me
-				</Link>
-				<Link className="button button-secondary" href="#work">
-					Selected Work
-				</Link>
+		<section
+			className="opening-scene"
+			id="top"
+			aria-labelledby="hero-title"
+			data-opening
+		>
+			<div className="opening-copy">
+				<p className="scene-caption" data-opening-caption>
+					Full-Stack Developer · Dhaka, Bangladesh
+				</p>
+				<h1 id="hero-title">
+					{heroWords.map((word) => (
+						<span className="title-word-mask" key={word}>
+							<span data-opening-word>{word}</span>
+						</span>
+					))}
+				</h1>
+				<div className="hero-actions" data-opening-actions>
+					<Link className="button button-light" href={socialLinks[0].href}>
+						Hire Me
+					</Link>
+					<Link className="button button-outline" href="#work">
+						Selected Work
+					</Link>
+				</div>
 			</div>
-			<CubeUnicorn />
+			<div className="opening-visual" data-opening-visual>
+				<CubeUnicorn />
+			</div>
+			<p className="scroll-prompt" aria-hidden="true">
+				Scroll to enter
+			</p>
 		</section>
 	);
 }
 
-function CapabilityMarquee() {
+function IdentityScene() {
 	return (
-		<section className="capability-strip" aria-label="Fields of work">
-			<div className="marquee-track">
-				{[...capabilities, ...capabilities].map((capability, index) => (
-					<span
-						key={`${capability}-${index}`}
-						aria-hidden={index >= capabilities.length}
-					>
-						{capability}
+		<section
+			className="identity-scene"
+			id="about"
+			aria-labelledby="identity-title"
+			data-identity
+		>
+			<p className="scene-caption">One practice across software and hardware</p>
+			<h2 id="identity-title">
+				{identityWords.map((word, index) => (
+					<span data-identity-word key={`${word}-${index}`}>
+						{word}{" "}
 					</span>
 				))}
-			</div>
+			</h2>
 		</section>
 	);
 }
@@ -93,21 +114,34 @@ function ProjectLinks({ project }: { project: Project }) {
 	);
 }
 
-function ProjectBento({ projects }: { projects: Project[] }) {
+function ProjectSequence() {
 	return (
-		<section className="chapter" id="work" aria-labelledby="work-title">
-			<div className="section-heading">
-				<p className="eyebrow">Selected work</p>
-				<h2 id="work-title">Products built across screens and circuits.</h2>
-			</div>
-			<div className="project-bento grid grid-cols-1 md:grid-cols-12 md:grid-rows-2 grid-flow-dense">
+		<section
+			className="project-sequence"
+			id="work"
+			aria-labelledby="work-title"
+			data-project-sequence
+		>
+			<header className="sequence-intro">
+				<p className="scene-caption">Selected work</p>
+				<h2 id="work-title">Four projects. One practice.</h2>
+			</header>
+			<div className="project-scenes">
 				{projects.map((project) => (
 					<article
-						className={`project-card tone-${project.tone} ${project.gridClass}`}
+						className={`project-scene tone-${project.tone}`}
+						data-project-scene
+						data-project-slug={project.slug}
 						key={project.slug}
 					>
+						<div className="project-scene-copy">
+							<p className="scene-caption">{project.field}</p>
+							<h3>{project.title}</h3>
+							<p>{project.summary}</p>
+							<ProjectLinks project={project} />
+						</div>
 						<Link
-							className="project-media media-link"
+							className="project-scene-media"
 							href={project.demo ?? project.href}
 							target="_blank"
 							rel="noreferrer"
@@ -117,16 +151,10 @@ function ProjectBento({ projects }: { projects: Project[] }) {
 								src={project.image}
 								alt={project.imageAlt}
 								fill
-								sizes="(max-width: 767px) 100vw, 50vw"
+								sizes="(max-width: 767px) 100vw, 58vw"
 								data-project-media
 							/>
 						</Link>
-						<div className="project-copy">
-							<p className="eyebrow">{project.field}</p>
-							<h3>{project.title}</h3>
-							<p>{project.summary}</p>
-							<ProjectLinks project={project} />
-						</div>
 					</article>
 				))}
 			</div>
@@ -134,129 +162,54 @@ function ProjectBento({ projects }: { projects: Project[] }) {
 	);
 }
 
-function FieldStatement() {
+function FieldMontage() {
 	return (
-		<section
-			className="field-statement"
-			id="about"
-			aria-labelledby="about-title"
-		>
-			<p className="eyebrow">From interface to hardware</p>
-			<h2 id="about-title">
-				I take ideas from screen{" "}
-				<span className="inline-image">
-					<Image src="/projects/bteb-flow.png" alt="" fill sizes="160px" />
-				</span>{" "}
-				to circuit{" "}
-				<span className="inline-image">
-					<Image
-						src="/projects/soldering-station.jpg"
-						alt=""
-						fill
-						sizes="160px"
-					/>
-				</span>{" "}
-				and build the systems between.
+		<section className="field-montage" aria-labelledby="fields-title">
+			<p className="scene-caption">Built across disciplines</p>
+			<h2 id="fields-title">
+				Products that move between pixels and physical systems.
 			</h2>
-			<p className="field-copy">
-				Full-Stack Developer building scalable software, intuitive experiences,
-				embedded systems, and IoT products.
-			</p>
-		</section>
-	);
-}
-
-function ProjectAccordion({ projects }: { projects: Project[] }) {
-	return (
-		<div className="project-accordion" aria-label="Explore projects by field">
-			{projects.map((project, index) => (
-				<details
-					className={`accordion-item tone-${project.tone}`}
-					key={project.slug}
-					open={index === 0}
-				>
-					<summary>
-						<span>{project.field}</span>
-						<strong>{project.title}</strong>
-					</summary>
-					<div className="accordion-copy">
-						<p>{project.summary}</p>
-						<Link href={project.href} target="_blank" rel="noreferrer">
-							Explore project <span aria-hidden="true">↗</span>
-						</Link>
-					</div>
-				</details>
-			))}
-		</div>
-	);
-}
-
-function ProjectStack({ projects }: { projects: Project[] }) {
-	return (
-		<section
-			className="chapter project-stories"
-			aria-labelledby="stories-title"
-		>
-			<div className="section-heading">
-				<p className="eyebrow">How the work takes shape</p>
-				<h2 id="stories-title">
-					One practice, from product decisions to precise control.
-				</h2>
-			</div>
-			<ProjectAccordion projects={projects} />
-			<div className="project-stack" data-stack>
-				{projects.map((project) => (
-					<article
-						className={`stack-card tone-${project.tone}`}
-						data-stack-card
-						key={project.slug}
-					>
-						<div className="stack-copy">
-							<p className="eyebrow">{project.field}</p>
-							<h3>{project.title}</h3>
-							<p>{project.summary}</p>
-							<ProjectLinks project={project} />
-						</div>
-						<div className="stack-media">
-							<Image
-								src={project.image}
-								alt={project.imageAlt}
-								fill
-								sizes="(max-width: 767px) 100vw, 55vw"
-								data-project-media
-							/>
-						</div>
-					</article>
+			<div className="field-track" data-field-track>
+				{capabilities.map((capability) => (
+					<span key={capability}>{capability}</span>
 				))}
 			</div>
 		</section>
 	);
 }
 
-function TestimonialStructure() {
-	return testimonials.length ? <section aria-label="Testimonials" /> : null;
-}
-
-function ContactSection({ links }: { links: typeof socialLinks }) {
+function ContactScene() {
 	return (
 		<section
-			className="contact-section"
+			className="contact-scene"
 			id="contact"
 			aria-labelledby="contact-title"
+			data-contact
 		>
-			<p className="eyebrow">
+			<p className="scene-caption">
 				Available for internships and freelance projects.
 			</p>
-			<h2 id="contact-title">Have something worth building?</h2>
-			<p>Let&apos;s make the product, system, or prototype real.</p>
-			<Link className="button button-primary" href={links[0].href}>
+			<h2 id="contact-title">Let&apos;s build what comes next.</h2>
+			<Link className="button button-dark" href={socialLinks[0].href}>
 				Hire Me
 			</Link>
+			<nav className="contact-links" aria-label="Contact and social links">
+				{socialLinks.slice(1).map((link) => (
+					<Link
+						key={link.label}
+						href={link.href}
+						target="_blank"
+						rel="noreferrer"
+					>
+						{link.label}
+					</Link>
+				))}
+			</nav>
 		</section>
 	);
 }
 
-function SiteFooter({ links }: { links: typeof socialLinks }) {
+function SiteFooter() {
 	return (
 		<footer className="site-footer">
 			<div>
@@ -265,18 +218,7 @@ function SiteFooter({ links }: { links: typeof socialLinks }) {
 				</Link>
 				<p>Full-Stack Developer · Dhaka, Bangladesh</p>
 			</div>
-			<nav aria-label="Social links">
-				{links.map((link) => (
-					<Link
-						key={link.label}
-						href={link.href}
-						target={link.label === "Email" ? undefined : "_blank"}
-						rel={link.label === "Email" ? undefined : "noreferrer"}
-					>
-						{link.label}
-					</Link>
-				))}
-			</nav>
+			<Link href="#top">Back to top</Link>
 		</footer>
 	);
 }
@@ -284,17 +226,18 @@ function SiteFooter({ links }: { links: typeof socialLinks }) {
 export default function Home() {
 	return (
 		<MotionRoot>
+			<a className="skip-link" href="#main">
+				Skip to content
+			</a>
 			<SiteNav />
-			<main className="w-full max-w-full overflow-x-hidden">
-				<Hero />
-				<CapabilityMarquee />
-				<ProjectBento projects={projects} />
-				<FieldStatement />
-				<ProjectStack projects={projects} />
-				<TestimonialStructure />
-				<ContactSection links={socialLinks} />
+			<main id="main" className="cinematic-page">
+				<OpeningScene />
+				<IdentityScene />
+				<ProjectSequence />
+				<FieldMontage />
+				<ContactScene />
 			</main>
-			<SiteFooter links={socialLinks} />
+			<SiteFooter />
 		</MotionRoot>
 	);
 }

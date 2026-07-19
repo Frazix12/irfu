@@ -11,6 +11,16 @@ describe("portfolio content", () => {
 		]);
 	});
 
+	it("keeps cinematic scene tones in the approved order", () => {
+		expect(projects.map((project) => project.tone)).toEqual([
+			"lilac",
+			"mint",
+			"coral",
+			"navy",
+		]);
+		expect(projects.every((project) => !("gridClass" in project))).toBe(true);
+	});
+
 	it("uses email as the primary hiring destination", () => {
 		expect(socialLinks[0]).toMatchObject({ label: "Email", primary: true });
 		expect(socialLinks[0].href).toBe("mailto:frazixgaming22@gmail.com");
