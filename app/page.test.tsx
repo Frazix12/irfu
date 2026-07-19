@@ -57,6 +57,12 @@ describe("cinematic portfolio structure", () => {
 		);
 	});
 
+	it("exposes the animated identity heading as a readable sentence", () => {
+		expect(html).toContain(
+			'aria-label="From screen to circuit, I build the systems between."',
+		);
+	});
+
 	it("renders each featured project once and in approved order", () => {
 		expect(html.match(/data-project-scene=/g)).toHaveLength(4);
 		const positions = projectSlugs.map((slug) => {

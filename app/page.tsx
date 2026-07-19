@@ -91,7 +91,7 @@ function IdentityScene() {
 			data-identity
 		>
 			<p className="scene-caption">One practice across software and hardware</p>
-			<h2 id="identity-title">
+			<h2 id="identity-title" aria-label={identityWords.join(" ")}>
 				{identityWords.map((word, index) => (
 					<span data-identity-word key={`${word}-${index}`}>
 						{word}{" "}
