@@ -45,7 +45,7 @@ function Hero() {
   return (
     <section className="hero" id="top" aria-labelledby="hero-title">
       <p className="eyebrow">Full-Stack Developer · Dhaka, Bangladesh</p>
-      <h1 id="hero-title">I build digital products and physical systems.</h1>
+      <h1 id="hero-title" className="max-w-6xl">I build digital products and physical systems.</h1>
       <div className="hero-actions">
         <Link className="button button-primary" href={socialLinks[0].href}>
           Hire Me
