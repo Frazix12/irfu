@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { CubeUnicorn } from "@/components/cube-unicorn";
@@ -9,37 +10,16 @@ import {
 	type Project,
 } from "@/lib/portfolio";
 
-const heroWords = "I build digital products and physical systems.".split(" ");
-const identityWords =
-	"From screen to circuit, I build the systems between.".split(" ");
-
-function SiteNav() {
-	return (
-		<header className="site-header">
-			<nav className="site-nav" aria-label="Primary navigation">
-				<Link className="wordmark" href="#top" aria-label="Irfan Hossain, home">
-					Irfan Hossain
-				</Link>
-				<div className="nav-links">
-					<Link href="#work">Work</Link>
-					<Link href="#about">About</Link>
-					<Link href="#contact">Contact</Link>
-				</div>
-				<details className="mobile-nav">
-					<summary>Menu</summary>
-					<div>
-						<Link href="#work">Work</Link>
-						<Link href="#about">About</Link>
-						<Link href="#contact">Contact</Link>
-					</div>
-				</details>
-				<Link className="button button-light nav-hire" href={socialLinks[0].href}>
-					Hire Me
-				</Link>
-			</nav>
-		</header>
-	);
-}
+const heroLines = [
+	"I build digital products".split(" "),
+	"and physical systems.".split(" "),
+];
+const identityLines = [
+	"From screen to circuit,".split(" "),
+	"I build the systems".split(" "),
+	"between.".split(" "),
+];
+const identityLabel = identityLines.flat().join(" ");
 
 function OpeningScene() {
 	return (
@@ -51,23 +31,49 @@ function OpeningScene() {
 		>
 			<div className="opening-copy">
 				<p className="scene-caption" data-opening-caption>
-					Full-Stack Developer · Dhaka, Bangladesh
+					Irfan Hossain · Dhaka, Bangladesh
 				</p>
-				<h1 id="hero-title">
-					{heroWords.map((word, index) => (
-						<span className="title-word-mask" key={word}>
-							<span data-opening-word>
-								{word}
-								{index < heroWords.length - 1 ? " " : null}
+				<h1
+					id="hero-title"
+					aria-label={heroLines.flat().join(" ")}
+					data-cursor="EXPLORE"
+					data-cursor-icon="→"
+					data-cursor-mode="text"
+				>
+					{heroLines.map((line, lineIndex) => (
+						<Fragment key={line.join(" ")}>
+							<span className="hero-line">
+								{line.map((word, wordIndex) => (
+									<span
+										className="title-word-mask"
+										key={`${lineIndex}-${word}`}
+									>
+										<span data-opening-word>
+											{word}
+											{wordIndex < line.length - 1 ? " " : null}
+										</span>
+									</span>
+								))}
 							</span>
-						</span>
+							{lineIndex < heroLines.length - 1 ? " " : null}
+						</Fragment>
 					))}
 				</h1>
 				<div className="hero-actions" data-opening-actions>
-					<Link className="button button-light" href={socialLinks[0].href}>
+					<Link
+						className="button button-light"
+						href={socialLinks[0].href}
+						data-cursor="HIRE"
+						data-cursor-icon="↗"
+					>
 						Hire Me
 					</Link>
-					<Link className="button button-outline" href="#work">
+					<Link
+						className="button button-outline"
+						href="#work"
+						data-cursor="VIEW"
+						data-cursor-icon="↓"
+					>
 						Selected Work
 					</Link>
 				</div>
@@ -90,14 +96,32 @@ function IdentityScene() {
 			aria-labelledby="identity-title"
 			data-identity
 		>
-			<p className="scene-caption">One practice across software and hardware</p>
-			<h2 id="identity-title" aria-label={identityWords.join(" ")}>
-				{identityWords.map((word, index) => (
-					<span data-identity-word key={`${word}-${index}`}>
-						{word}{" "}
-					</span>
-				))}
-			</h2>
+			<div className="identity-stage" data-identity-stage>
+				<div className="identity-progress" aria-hidden="true">
+					<span data-identity-progress />
+				</div>
+				<p className="scene-caption">
+					One practice across software and hardware
+				</p>
+				<h2
+					id="identity-title"
+					aria-label={identityLabel}
+					data-cursor="STORY"
+					data-cursor-icon="T"
+					data-cursor-mode="text"
+				>
+					{identityLines.map((line, lineIndex) => (
+						<span data-identity-line key={line.join(" ")}>
+							{line.map((word, wordIndex) => (
+								<span data-identity-word key={`${lineIndex}-${word}`}>
+									{word}
+									{wordIndex < line.length - 1 ? " " : null}
+								</span>
+							))}
+						</span>
+					))}
+				</h2>
+			</div>
 		</section>
 	);
 }
@@ -127,10 +151,17 @@ function ProjectSequence() {
 		>
 			<header className="sequence-intro">
 				<p className="scene-caption">Selected work</p>
-				<h2 id="work-title">Four projects. One practice.</h2>
+				<h2
+					id="work-title"
+					data-cursor="ARCHIVE"
+					data-cursor-icon="04"
+					data-cursor-mode="text"
+				>
+					Four projects. One practice.
+				</h2>
 			</header>
 			<div className="project-scenes">
-				{projects.map((project) => (
+				{projects.map((project, index) => (
 					<article
 						className={`project-scene tone-${project.tone}`}
 						data-project-scene
@@ -139,7 +170,13 @@ function ProjectSequence() {
 					>
 						<div className="project-scene-copy">
 							<p className="scene-caption">{project.field}</p>
-							<h3>{project.title}</h3>
+							<h3
+								data-cursor="PROJECT"
+								data-cursor-icon={String(index + 1).padStart(2, "0")}
+								data-cursor-mode="text"
+							>
+								{project.title}
+							</h3>
 							<p>{project.summary}</p>
 							<ProjectLinks project={project} />
 						</div>
@@ -149,6 +186,8 @@ function ProjectSequence() {
 							target="_blank"
 							rel="noreferrer"
 							aria-label={`View ${project.title}`}
+							data-cursor="VIEW"
+							data-cursor-icon="↗"
 						>
 							<Image
 								src={project.image}
@@ -169,7 +208,12 @@ function FieldMontage() {
 	return (
 		<section className="field-montage" aria-labelledby="fields-title">
 			<p className="scene-caption">Built across disciplines</p>
-			<h2 id="fields-title">
+			<h2
+				id="fields-title"
+				data-cursor="FIELDS"
+				data-cursor-icon="+"
+				data-cursor-mode="text"
+			>
 				Products that move between pixels and physical systems.
 			</h2>
 			<div className="field-track" data-field-track>
@@ -192,8 +236,20 @@ function ContactScene() {
 			<p className="scene-caption">
 				Available for internships and freelance projects.
 			</p>
-			<h2 id="contact-title">Let&apos;s build what comes next.</h2>
-			<Link className="button button-dark" href={socialLinks[0].href}>
+			<h2
+				id="contact-title"
+				data-cursor="HELLO"
+				data-cursor-icon="@"
+				data-cursor-mode="text"
+			>
+				Let&apos;s build what comes next.
+			</h2>
+			<Link
+				className="button button-dark"
+				href={socialLinks[0].href}
+				data-cursor="HIRE"
+				data-cursor-icon="↗"
+			>
 				Hire Me
 			</Link>
 			<nav className="contact-links" aria-label="Contact and social links">
@@ -248,10 +304,9 @@ function SiteFooter() {
 export default function Home() {
 	return (
 		<MotionRoot>
-			<a className="skip-link" href="#main">
+			<Link className="skip-link" href="#main">
 				Skip to content
-			</a>
-			<SiteNav />
+			</Link>
 			<main id="main" className="cinematic-page" tabIndex={-1}>
 				<OpeningScene />
 				<IdentityScene />

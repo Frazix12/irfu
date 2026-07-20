@@ -7,7 +7,7 @@ export type Project = {
 	imageAlt: string;
 	href: string;
 	demo?: string;
-	tone: "lilac" | "mint" | "coral" | "navy";
+	tone: "bteb" | "amar" | "smd" | "soldering";
 };
 
 export const projects: Project[] = [
@@ -17,11 +17,11 @@ export const projects: Project[] = [
 		field: "Education product",
 		summary:
 			"Learning resources and practical tools for Bangladesh's technical education students.",
-		image: "/projects/bteb-flow.png",
-		imageAlt: "BTEB Flow routine interface",
+		image: "/assets/bteb-flow.png",
+		imageAlt: "BTEB Flow student results portal",
 		href: "https://github.com/Frazix12/btebflow",
 		demo: "https://btebflow.vercel.app/",
-		tone: "lilac",
+		tone: "bteb",
 	},
 	{
 		slug: "amar-hisab",
@@ -29,10 +29,10 @@ export const projects: Project[] = [
 		field: "Finance product",
 		summary:
 			"An expense tracker with grocery-list management in one focused interface.",
-		image: "/projects/amar-hisab.png",
-		imageAlt: "AmarHisab expense dashboard",
+		image: "/assets/amar-hisab.png",
+		imageAlt: "AmarHisab Android expense tracker product page",
 		href: "https://github.com/Frazix12/AmarHisab",
-		tone: "mint",
+		tone: "amar",
 	},
 	{
 		slug: "smd-rework-station",
@@ -40,11 +40,11 @@ export const projects: Project[] = [
 		field: "Embedded system",
 		summary:
 			"PID heat control, airflow calibration, desktop tools, and a live web UI.",
-		image: "/projects/smd-rework.png",
+		image: "/projects/smd-rework.jpeg",
 		imageAlt: "SMD Rework Station control interface",
 		href: "https://github.com/Frazix12/SMD-Rework-Station",
 		demo: "https://smd-station.vercel.app/",
-		tone: "coral",
+		tone: "smd",
 	},
 	{
 		slug: "diy-soldering-station",
@@ -54,7 +54,7 @@ export const projects: Project[] = [
 		image: "/projects/soldering-station.jpg",
 		imageAlt: "Completed DIY soldering station",
 		href: "https://github.com/Frazix12/SolderingStation",
-		tone: "navy",
+		tone: "soldering",
 	},
 ];
 

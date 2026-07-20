@@ -1,0 +1,240 @@
+<style>
+  .direction-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-top: 24px;
+  }
+  .direction {
+    cursor: pointer;
+    border: 2px solid transparent;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #111;
+    transition: 0.2s;
+  }
+  .direction:hover,
+  .direction.selected {
+    transform: translateY(-4px);
+    border-color: #8b5cf6;
+  }
+  .hero {
+    min-height: 360px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow: hidden;
+  }
+  .mini-nav {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .hero-copy {
+    margin-top: auto;
+    z-index: 2;
+  }
+  .hero-copy h3 {
+    font-size: 29px;
+    line-height: 0.95;
+    margin: 0 0 10px;
+    letter-spacing: -0.06em;
+  }
+  .hero-copy p {
+    font-size: 11px;
+    max-width: 210px;
+    margin: 0 0 14px;
+    opacity: 0.72;
+  }
+  .hire {
+    display: inline-block;
+    padding: 8px 13px;
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .cube {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    right: -12px;
+    top: 72px;
+    transform: rotate(28deg);
+    border-radius: 26px;
+    box-shadow: 0 30px 80px #0008;
+  }
+  .cube:after {
+    content: "";
+    position: absolute;
+    inset: 20%;
+    border: 1px solid #fff5;
+    border-radius: 16px;
+  }
+  .mono {
+    background: #050505;
+    color: #f5f5f0;
+  }
+  .mono .cube {
+    background: linear-gradient(135deg, #fff 0%, #777 28%, #111 55%, #aaa 100%);
+  }
+  .mono .hire {
+    background: #fff;
+    color: #050505;
+  }
+  .editorial {
+    background: #eee7db;
+    color: #1e1d1a;
+  }
+  .editorial .cube {
+    background: linear-gradient(
+      135deg,
+      #ff6b21,
+      #ffb36b 35%,
+      #33241f 68%,
+      #ff6b21
+    );
+  }
+  .editorial .hire {
+    background: #ff5a13;
+    color: white;
+  }
+  .electric {
+    background: radial-gradient(circle at 65% 35%, #24115c, #080814 56%);
+    color: #eff4ff;
+  }
+  .electric .cube {
+    background: linear-gradient(
+      135deg,
+      #52f7ff,
+      #7857ff 42%,
+      #ee4cff 76%,
+      #151331
+    );
+    box-shadow: 0 0 80px #784cff88;
+  }
+  .electric .hire {
+    background: #d9ff45;
+    color: #090a0e;
+  }
+  .tag {
+    position: absolute;
+    left: 22px;
+    top: 72px;
+    font: 700 9px monospace;
+    letter-spacing: 0.14em;
+    writing-mode: vertical-rl;
+    opacity: 0.55;
+  }
+  .direction-label {
+    padding: 15px;
+    background: #fff;
+    color: #171717;
+  }
+  .direction-label strong {
+    display: block;
+    margin-bottom: 4px;
+  }
+  .direction-label span {
+    font-size: 12px;
+    color: #666;
+  }
+  @media (max-width: 900px) {
+    .direction-grid {
+      grid-template-columns: 1fr;
+    }
+    .hero {
+      min-height: 320px;
+    }
+  }
+</style>
+<h2>Choose the visual world</h2>
+<p class="subtitle">
+  All three use the animated Cube Unicorn hero. Click the direction that feels
+  most like Irfan.
+</p>
+<div class="direction-grid">
+  <div
+    class="direction"
+    data-choice="obsidian-mono"
+    onclick="toggleSelect(this)"
+  >
+    <div class="hero mono">
+      <div class="mini-nav">
+        <b>IRFAN®</b><span>WORK&nbsp;&nbsp;ABOUT&nbsp;&nbsp;CONTACT</span>
+      </div>
+      <span class="tag">DHAKA — BANGLADESH</span>
+      <div class="cube"></div>
+      <div class="hero-copy">
+        <h3>IRFAN<br />HOSSAIN.</h3>
+        <p>
+          Full-stack developer building digital products and embedded systems.
+        </p>
+        <span class="hire">HIRE ME ↗</span>
+      </div>
+    </div>
+    <div class="direction-label">
+      <strong>A — Obsidian Mono</strong
+      ><span
+        >Gallery-like, premium, restrained. The cube and work carry the
+        drama.</span
+      >
+    </div>
+  </div>
+  <div
+    class="direction"
+    data-choice="warm-editorial"
+    onclick="toggleSelect(this)"
+  >
+    <div class="hero editorial">
+      <div class="mini-nav">
+        <b>IRFAN / 2026</b><span>SELECTED WORK&nbsp;&nbsp;↗</span>
+      </div>
+      <span class="tag">PRODUCTS + HARDWARE</span>
+      <div class="cube"></div>
+      <div class="hero-copy">
+        <h3>Ideas,<br />made real.</h3>
+        <p>
+          Web products, mobile experiences, IoT and electronics—built end to
+          end.
+        </p>
+        <span class="hire">LET'S WORK</span>
+      </div>
+    </div>
+    <div class="direction-label">
+      <strong>B — Warm Editorial</strong
+      ><span
+        >Distinctive and human. Strong typography with tactile orange
+        accents.</span
+      >
+    </div>
+  </div>
+  <div
+    class="direction"
+    data-choice="electric-depth"
+    onclick="toggleSelect(this)"
+  >
+    <div class="hero electric">
+      <div class="mini-nav">
+        <b>IRFAN://DEV</b><span>AVAILABLE FOR WORK ●</span>
+      </div>
+      <span class="tag">FULL-STACK / IOT</span>
+      <div class="cube"></div>
+      <div class="hero-copy">
+        <h3>BUILDING<br />BEYOND<br />THE SCREEN.</h3>
+        <p>Digital products meet embedded systems and electronics.</p>
+        <span class="hire">HIRE IRFAN ↗</span>
+      </div>
+    </div>
+    <div class="direction-label">
+      <strong>C — Electric Depth</strong
+      ><span
+        >Futuristic and high-energy. Best match for the luminous WebGL
+        cube.</span
+      >
+    </div>
+  </div>
+</div>

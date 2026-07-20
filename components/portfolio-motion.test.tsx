@@ -39,8 +39,9 @@ vi.mock("gsap/ScrollTrigger", () => ({
 }));
 
 vi.mock("gsap", () => {
-	const timeline = { from: vi.fn() };
+	const timeline = { from: vi.fn(), fromTo: vi.fn() };
 	timeline.from.mockReturnValue(timeline);
+	timeline.fromTo.mockReturnValue(timeline);
 
 	return {
 		default: {

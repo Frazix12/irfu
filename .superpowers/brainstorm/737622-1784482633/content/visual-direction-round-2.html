@@ -1,0 +1,448 @@
+<style>
+  .theme-list {
+    display: grid;
+    gap: 28px;
+    margin-top: 24px;
+  }
+  .theme {
+    border: 2px solid transparent;
+    border-radius: 20px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #fff;
+    transition: 0.2s;
+  }
+  .theme:hover,
+  .theme.selected {
+    border-color: #315ea8;
+    transform: translateY(-3px);
+    box-shadow: 0 18px 45px #17201e1a;
+  }
+  .preview {
+    min-height: 430px;
+    position: relative;
+    overflow: hidden;
+  }
+  .caption {
+    padding: 16px 18px;
+    background: #fff;
+    color: #17201e;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  .caption b {
+    font-size: 15px;
+  }
+  .caption span {
+    font-size: 12px;
+    color: #68706c;
+    max-width: 520px;
+  }
+  .cube-svg {
+    filter: drop-shadow(0 30px 25px #17201e3b);
+  }
+  .micro {
+    font:
+      700 9px/1.4 ui-monospace,
+      monospace;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+  .cta {
+    display: inline-block;
+    padding: 11px 16px;
+    font: 700 11px/1 sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .delta {
+    background-color: #e8e7e1;
+    background-image:
+      linear-gradient(#a9aea844 1px, transparent 1px),
+      linear-gradient(90deg, #a9aea844 1px, transparent 1px);
+    background-size: 42px 42px;
+    color: #17201e;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr 0.42fr;
+    gap: 24px;
+  }
+  .delta .identity {
+    display: flex;
+    flex-direction: column;
+  }
+  .delta h3 {
+    font:
+      900 62px/0.82 "Arial Narrow",
+      sans-serif;
+    letter-spacing: -0.06em;
+    margin: auto 0 20px;
+    text-transform: uppercase;
+  }
+  .delta .chamber {
+    background: #17483f;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .delta .chamber:before,
+  .delta .chamber:after {
+    content: "";
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border-color: #d4b942;
+    border-style: solid;
+  }
+  .delta .chamber:before {
+    left: 12px;
+    top: 12px;
+    border-width: 2px 0 0 2px;
+  }
+  .delta .chamber:after {
+    right: 12px;
+    bottom: 12px;
+    border-width: 0 2px 2px 0;
+  }
+  .delta .fields {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-left: 1px solid #a9aea8;
+    padding-left: 12px;
+  }
+  .delta .cta {
+    background: #d4b942;
+    color: #17201e;
+  }
+  .signal {
+    background: #dde4dc;
+    color: #17343a;
+    padding: 24px;
+  }
+  .signal .panel {
+    height: 380px;
+    background: #f3f1e8;
+    border: 1px solid #aab8ac;
+    border-radius: 16px;
+    box-shadow:
+      0 14px 0 #bdc9be,
+      0 22px 35px #17343a22;
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .signal .screw {
+    position: absolute;
+    width: 9px;
+    height: 9px;
+    border: 1px solid #75877a;
+    border-radius: 50%;
+    background: #d8ddd5;
+  }
+  .signal .s1 {
+    top: 12px;
+    left: 12px;
+  }
+  .signal .s2 {
+    right: 12px;
+    top: 12px;
+  }
+  .signal .s3 {
+    left: 12px;
+    bottom: 12px;
+  }
+  .signal .s4 {
+    right: 12px;
+    bottom: 12px;
+  }
+  .signal .copy {
+    padding: 42px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .signal h3 {
+    font: 700 52px/0.88 sans-serif;
+    letter-spacing: -0.055em;
+    margin: 0;
+  }
+  .signal .stage {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background:
+      linear-gradient(
+        90deg,
+        transparent 49.7%,
+        #aab8ac66 50%,
+        transparent 50.3%
+      ),
+      linear-gradient(transparent 49.7%, #aab8ac66 50%, transparent 50.3%);
+  }
+  .signal .stage:before {
+    content: "";
+    position: absolute;
+    left: -24%;
+    top: 52%;
+    width: 45%;
+    height: 2px;
+    background: #a86243;
+    box-shadow: 44px -30px 0 -0.4px #a86243;
+  }
+  .signal .cta {
+    background: #e5c84b;
+    color: #17343a;
+    border-radius: 7px;
+    box-shadow: 0 3px 0 #9e8a2e;
+  }
+  .signal .led {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #1f5a49;
+    margin-right: 8px;
+  }
+  .monsoon {
+    background: #e8eee9;
+    color: #18221f;
+    min-height: 430px;
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 0.7fr 1.3fr;
+    position: relative;
+  }
+  .monsoon:after {
+    content: "";
+    position: absolute;
+    left: 34%;
+    right: 4%;
+    top: 52%;
+    height: 2px;
+    background: #a83243;
+  }
+  .monsoon .copy {
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .monsoon h3 {
+    font: 650 62px/0.9 sans-serif;
+    letter-spacing: -0.065em;
+    margin: 0;
+  }
+  .monsoon .cta {
+    background: #a83243;
+    color: #f7faf7;
+    border-radius: 99px;
+  }
+  .monsoon .plinth {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .monsoon .plinth:after {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 44px;
+    border-radius: 50%;
+    background: #355b5030;
+    filter: blur(12px);
+    bottom: 58px;
+  }
+  .monsoon .cube-svg {
+    width: 360px;
+    z-index: 1;
+  }
+  .monsoon .labels {
+    position: absolute;
+    inset: 28px 28px 28px auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: right;
+    color: #355b50;
+  }
+  @media (max-width: 800px) {
+    .delta {
+      grid-template-columns: 1fr;
+    }
+    .delta .chamber {
+      min-height: 230px;
+    }
+    .delta .fields {
+      display: none;
+    }
+    .signal .panel {
+      grid-template-columns: 1fr;
+      height: auto;
+    }
+    .signal .stage {
+      min-height: 240px;
+    }
+    .monsoon {
+      grid-template-columns: 1fr;
+    }
+    .monsoon .plinth {
+      min-height: 260px;
+    }
+    .preview {
+      min-height: 520px;
+    }
+    .caption {
+      flex-direction: column;
+    }
+  }
+</style>
+<h2>Round 02 — less portfolio, more Irfan</h2>
+<p class="subtitle">
+  These directions treat the cube as an engineered object and connect software
+  with physical computing. Click one—or tell me what to combine.
+</p>
+<div class="theme-list">
+  <div
+    class="theme"
+    data-choice="delta-instrument"
+    onclick="toggleSelect(this)"
+  >
+    <div class="preview delta">
+      <div class="identity">
+        <div class="micro">IRFAN / FIELD LOG 26<br />DHAKA, BANGLADESH</div>
+        <h3>Irfan<br />Hossain</h3>
+        <div>
+          <p>Building complete systems.<br />Screen to circuit.</p>
+          <span class="cta">Hire me →</span>
+        </div>
+      </div>
+      <div class="chamber">
+        <div
+          class="micro"
+          style="position: absolute; top: 18px; left: 18px; color: #e8e7e1"
+        >
+          SYSTEM / ACTIVE
+        </div>
+        <svg class="cube-svg" width="230" viewBox="0 0 220 220">
+          <polygon points="110,20 190,62 110,108 30,62" fill="#d9ddd6" />
+          <polygon points="30,62 110,108 110,198 30,151" fill="#496b8a" />
+          <polygon points="190,62 110,108 110,198 190,151" fill="#d4b942" />
+          <path
+            d="M110 20v88M30 62l80 46 80-46"
+            fill="none"
+            stroke="#17201e"
+            stroke-width="3"
+          />
+        </svg>
+      </div>
+      <div class="fields micro">
+        <span>01<br />WEB PRODUCTS</span><span>02<br />SYSTEMS</span
+        ><span>03<br />MOBILE</span><span>04<br />HARDWARE</span>
+      </div>
+    </div>
+    <div class="caption">
+      <b>A — Delta Instrument</b
+      ><span
+        >Field-engineering notebook + precision chamber. Strongest structure and
+        most technical personality.</span
+      >
+    </div>
+  </div>
+  <div class="theme" data-choice="signal-bench" onclick="toggleSelect(this)">
+    <div class="preview signal">
+      <div class="panel">
+        <i class="screw s1"></i><i class="screw s2"></i><i class="screw s3"></i
+        ><i class="screw s4"></i>
+        <div class="copy">
+          <div class="micro">
+            <i class="led"></i>AVAILABLE / INTERN + FREELANCE
+          </div>
+          <h3>Irfan<br />Hossain</h3>
+          <div>
+            <p>Digital products.<br />Physical systems.</p>
+            <span class="cta">Hire me ↗</span>
+          </div>
+        </div>
+        <div class="stage">
+          <span class="micro" style="position: absolute; top: 28px; right: 28px"
+            >WEB&nbsp;&nbsp;/&nbsp;&nbsp;EMBEDDED&nbsp;&nbsp;/&nbsp;&nbsp;MOBILE</span
+          ><svg class="cube-svg" width="250" viewBox="0 0 220 220">
+            <polygon
+              points="110,20 190,62 110,108 30,62"
+              fill="#dbe2d7"
+              stroke="#17343a"
+              stroke-width="2"
+            />
+            <polygon points="30,62 110,108 110,198 30,151" fill="#315ea8" />
+            <polygon points="190,62 110,108 110,198 190,151" fill="#1f5a49" />
+            <circle cx="110" cy="108" r="8" fill="#e5c84b" /></svg
+          ><span
+            class="micro"
+            style="
+              position: absolute;
+              bottom: 28px;
+              right: 28px;
+              color: #a86243;
+            "
+            >PROTOTYPE / LIVE</span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="caption">
+      <b>B — Signal Bench</b
+      ><span
+        >A premium electronics workbench: tactile panels, traces, screws, status
+        LEDs, and disciplined product presentation.</span
+      >
+    </div>
+  </div>
+  <div
+    class="theme"
+    data-choice="monsoon-instrument"
+    onclick="toggleSelect(this)"
+  >
+    <div class="preview monsoon">
+      <div class="copy">
+        <div class="micro">DHAKA / 23.8103° N</div>
+        <h3>Screen<br />to circuit.</h3>
+        <div>
+          <span class="cta">Hire Irfan ↗</span>
+          <p class="micro" style="margin-top: 18px">
+            STUDENT + FREELANCE DEVELOPER
+          </p>
+        </div>
+      </div>
+      <div class="plinth">
+        <svg class="cube-svg" viewBox="0 0 220 220">
+          <polygon
+            points="110,18 194,62 110,110 26,62"
+            fill="#f7faf7"
+            stroke="#aebAB7"
+            stroke-width="2"
+          />
+          <polygon points="26,62 110,110 110,204 26,156" fill="#b8c79f" />
+          <polygon points="194,62 110,110 110,204 194,156" fill="#355b50" />
+          <polygon points="110,110 144,91 144,132 110,152" fill="#a83243" />
+        </svg>
+      </div>
+      <div class="labels micro">
+        <span>WEB</span><span>SYSTEMS</span><span>MOBILE</span
+        ><span>HARDWARE</span>
+      </div>
+    </div>
+    <div class="caption">
+      <b>C — Monsoon Instrument</b
+      ><span
+        >A calm Dhaka-after-rain product lab. Oversized cube, mineral surfaces,
+        and one precise ruby calibration line.</span
+      >
+    </div>
+  </div>
+</div>

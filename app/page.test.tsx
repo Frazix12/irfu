@@ -67,9 +67,12 @@ describe("cinematic portfolio structure", () => {
 	});
 
 	it("renders a programmatically focusable main skip-link target", () => {
-		expect(html).toMatch(
-			/<main(?=[^>]*id="main")(?=[^>]*tabindex="-1")[^>]*>/,
-		);
+		expect(html).toMatch(/<main(?=[^>]*id="main")(?=[^>]*tabindex="-1")[^>]*>/);
+	});
+
+	it("opens directly into the hero without a primary navigation bar", () => {
+		expect(html).not.toContain('aria-label="Primary navigation"');
+		expect(html).not.toContain('class="site-header"');
 	});
 
 	it("preserves whitespace in the server-rendered hero heading", () => {
@@ -77,6 +80,7 @@ describe("cinematic portfolio structure", () => {
 		expect(heading?.replace(/<[^>]+>/g, "")).toBe(
 			"I build digital products and physical systems.",
 		);
+		expect(heading).toMatch(/<\/span> <span class="hero-line">/);
 	});
 
 	it("exposes the animated identity heading as a readable sentence", () => {
@@ -105,17 +109,13 @@ describe("cinematic portfolio structure", () => {
 		expect(motionSource).not.toContain("[data-opening-actions]");
 	});
 
-	it("scopes the only identity pin to tablet and desktop distances", () => {
-		expect(motionSource.match(/pin: true/g)).toHaveLength(1);
-		expect(motionSource).toContain(
-			"(min-width: 960px) and (prefers-reduced-motion: no-preference)",
-		);
-		expect(motionSource).toContain(
-			"(min-width: 768px) and (max-width: 959px) and (prefers-reduced-motion: no-preference)",
-		);
-		expect(motionSource).toContain(
-			'context.conditions?.desktop ? "+=120%" : "+=70%"',
-		);
+	it("scrubs the identity reveal through its sticky cinematic stage", () => {
+		expect(html).toContain("data-identity-stage");
+		expect(html.match(/data-identity-line=/g)).toHaveLength(3);
+		expect(html).toContain("data-identity-progress");
+		expect(motionSource).toContain('filter: "blur(12px)"');
+		expect(motionSource).toContain('end: "bottom bottom"');
+		expect(motionSource).not.toContain("pin: true");
 	});
 
 	it("keeps the footer to essential navigation and verified public links", () => {

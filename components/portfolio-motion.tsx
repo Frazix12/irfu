@@ -5,6 +5,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis, { type ScrollToOptions } from "lenis";
+import { CinematicCursor } from "./cinematic-cursor";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -19,9 +20,7 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 				const anchors = {
 					onComplete: () => {
 						if (location.hash === "#main") {
-							document
-								.getElementById("main")
-								?.focus({ preventScroll: true });
+							document.getElementById("main")?.focus({ preventScroll: true });
 						}
 					},
 				} satisfies ScrollToOptions;
@@ -78,32 +77,36 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 				};
 			});
 
-			media.add(
-				{
-					desktop:
-						"(min-width: 960px) and (prefers-reduced-motion: no-preference)",
-					tablet:
-						"(min-width: 768px) and (max-width: 959px) and (prefers-reduced-motion: no-preference)",
-				},
-				(context) => {
-					gsap.fromTo(
-						"[data-identity-word]",
-						{ opacity: 0.14 },
-						{
-							opacity: 1,
-							ease: "none",
-							stagger: 0.08,
-							scrollTrigger: {
-								trigger: "[data-identity]",
-								start: "top top",
-								end: context.conditions?.desktop ? "+=120%" : "+=70%",
-								pin: true,
-								scrub: 1,
-							},
+			media.add("(prefers-reduced-motion: no-preference)", () => {
+				gsap
+					.timeline({
+						scrollTrigger: {
+							trigger: "[data-identity]",
+							start: "top top",
+							end: "bottom bottom",
+							scrub: 1,
 						},
+					})
+					.fromTo(
+						"[data-identity-word]",
+						{ filter: "blur(12px)", opacity: 0.08, yPercent: 70 },
+						{
+							filter: "blur(0px)",
+							opacity: 1,
+							yPercent: 0,
+							duration: 1,
+							ease: "none",
+							stagger: 0.1,
+						},
+						0,
+					)
+					.fromTo(
+						"[data-identity-progress]",
+						{ scaleY: 0 },
+						{ scaleY: 1, duration: 1.8, ease: "none" },
+						0,
 					);
-				},
-			);
+			});
 
 			media.add(
 				"(min-width: 768px) and (prefers-reduced-motion: no-preference)",
@@ -152,22 +155,6 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 			media.add(
 				"(max-width: 767px) and (prefers-reduced-motion: no-preference)",
 				() => {
-					gsap.fromTo(
-						"[data-identity-word]",
-						{ opacity: 0.14 },
-						{
-							opacity: 1,
-							ease: "none",
-							stagger: 0.08,
-							scrollTrigger: {
-								trigger: "[data-identity]",
-								start: "top 85%",
-								end: "center 45%",
-								scrub: 1,
-							},
-						},
-					);
-
 					gsap.utils
 						.toArray<HTMLElement>("[data-project-scene]")
 						.forEach((scene) => {
@@ -192,5 +179,10 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 		{ scope },
 	);
 
-	return <div ref={scope}>{children}</div>;
+	return (
+		<div ref={scope}>
+			<CinematicCursor />
+			{children}
+		</div>
+	);
 }

@@ -1,0 +1,808 @@
+<style>
+  .design-list {
+    display: grid;
+    gap: 32px;
+    margin-top: 24px;
+  }
+  .design-option {
+    overflow: hidden;
+    border: 3px solid transparent;
+    border-radius: 24px;
+    background: #fff;
+    cursor: pointer;
+    transition:
+      transform 0.45s cubic-bezier(0.32, 0.72, 0, 1),
+      border-color 0.45s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .design-option:hover,
+  .design-option.selected {
+    transform: translateY(-5px);
+    border-color: #111;
+  }
+  .design-caption {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 17px 20px;
+    background: #fff;
+    color: #111;
+    border-top: 1px solid #ddd;
+  }
+  .design-caption b {
+    font-size: 16px;
+  }
+  .design-caption span {
+    max-width: 620px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #555;
+  }
+  .preview {
+    position: relative;
+    min-height: 540px;
+    overflow: hidden;
+  }
+  .mini-nav {
+    height: 54px;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 5;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  .mini-links {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+  .mini-cta {
+    padding: 9px 14px;
+    border-radius: 99px;
+  }
+  .cube-art {
+    position: absolute;
+    z-index: 2;
+    filter: drop-shadow(0 28px 22px #0003);
+  }
+  .cube-art polygon {
+    stroke-width: 2;
+  }
+  .hero-label {
+    font:
+      600 9px/1.2 ui-monospace,
+      monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .shot {
+    background-position: center;
+    background-size: cover;
+  }
+  .swiss {
+    background: #fff;
+    color: #000;
+    font-family: "Arial Narrow", system-ui, sans-serif;
+  }
+  .swiss .mini-nav {
+    border-bottom: 2px solid #000;
+  }
+  .swiss .mini-cta {
+    background: #000;
+    color: #fff;
+  }
+  .swiss .yellow {
+    position: absolute;
+    left: 58%;
+    top: 78px;
+    width: 45%;
+    height: 330px;
+    background: #f4ef4e;
+  }
+  .swiss h3 {
+    position: absolute;
+    z-index: 3;
+    left: 28px;
+    top: 105px;
+    margin: 0;
+    font-size: 68px;
+    line-height: 0.82;
+    letter-spacing: -0.065em;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+  .swiss .cube-art {
+    width: 330px;
+    right: -36px;
+    top: 76px;
+    transform: rotate(7deg);
+  }
+  .swiss .cube-art .t {
+    fill: #fff;
+  }
+  .swiss .cube-art .l {
+    fill: #2949ff;
+  }
+  .swiss .cube-art .r {
+    fill: #ff4b36;
+  }
+  .swiss .cube-art polygon {
+    stroke: #000;
+  }
+  .swiss .actions {
+    position: absolute;
+    left: 28px;
+    bottom: 85px;
+    z-index: 4;
+    display: flex;
+    gap: 8px;
+  }
+  .swiss .actions span {
+    padding: 10px 15px;
+    border: 2px solid #000;
+    border-radius: 99px;
+    font-size: 10px;
+    font-weight: 800;
+  }
+  .swiss .actions span:first-child {
+    background: #000;
+    color: #fff;
+  }
+  .swiss .swiss-strip {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 58px;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 0 24px;
+    font-size: 13px;
+    font-weight: 800;
+    text-transform: uppercase;
+  }
+  .swiss .swiss-strip i {
+    width: 10px;
+    height: 10px;
+    background: #f4ef4e;
+  }
+  .chrome {
+    background: #e8eeea;
+    color: #141816;
+    font-family: Outfit, system-ui, sans-serif;
+  }
+  .chrome .mini-nav {
+    border-bottom: 1px solid #aab4b0;
+  }
+  .chrome .mini-cta {
+    background: #a8ff60;
+    color: #141816;
+  }
+  .chrome .chrome-copy {
+    text-align: center;
+    position: relative;
+    z-index: 3;
+    padding: 32px 20px 0;
+  }
+  .chrome h3 {
+    font-size: 52px;
+    line-height: 0.94;
+    letter-spacing: -0.045em;
+    font-weight: 450;
+    margin: 8px auto 12px;
+    max-width: 720px;
+  }
+  .chrome .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+  }
+  .chrome .buttons span {
+    padding: 9px 14px;
+    border-radius: 99px;
+    background: #141816;
+    color: #e8eeea;
+    font-size: 10px;
+  }
+  .chrome .buttons span:first-child {
+    background: #a8ff60;
+    color: #141816;
+  }
+  .chrome .plinth {
+    position: absolute;
+    left: 17%;
+    right: 17%;
+    bottom: 38px;
+    height: 145px;
+    border-radius: 22px;
+    background: #aab4b0;
+    box-shadow: 0 12px 0 #141816;
+  }
+  .chrome .cube-art {
+    width: 260px;
+    left: 50%;
+    bottom: 52px;
+    transform: translateX(-50%);
+  }
+  .chrome .cube-art .t {
+    fill: #dfe6e2;
+  }
+  .chrome .cube-art .l {
+    fill: #3553a4;
+  }
+  .chrome .cube-art .r {
+    fill: #a8ff60;
+  }
+  .chrome .cube-art polygon {
+    stroke: #141816;
+  }
+  .chrome .plate {
+    position: absolute;
+    bottom: 18px;
+    width: 120px;
+    height: 86px;
+    border-radius: 12px;
+    background: #f4f7f5;
+    border: 1px solid #141816;
+    padding: 10px;
+    font-size: 9px;
+  }
+  .chrome .p1 {
+    left: 28px;
+  }
+  .chrome .p2 {
+    right: 28px;
+    background: #3553a4;
+    color: white;
+  }
+  .earth {
+    background: #f2e8d9;
+    color: #201a17;
+    font-family: Georgia, "Times New Roman", serif;
+  }
+  .earth:after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image: radial-gradient(#201a17 0.5px, transparent 0.5px);
+    background-size: 5px 5px;
+  }
+  .earth .mini-nav {
+    border-bottom: 1px solid #201a17;
+    font-family: system-ui, sans-serif;
+  }
+  .earth .mini-cta {
+    background: #741f33;
+    color: #f2e8d9;
+  }
+  .earth .earth-grid {
+    display: grid;
+    grid-template-columns: 58% 42%;
+    height: 486px;
+  }
+  .earth .earth-copy {
+    padding: 50px 28px;
+    position: relative;
+    z-index: 2;
+  }
+  .earth h3 {
+    font-size: 58px;
+    line-height: 0.9;
+    letter-spacing: -0.055em;
+    font-weight: 600;
+    margin: 16px 0 20px;
+  }
+  .earth p {
+    font-family: system-ui, sans-serif;
+    font-size: 12px;
+    line-height: 1.5;
+    max-width: 340px;
+  }
+  .earth .earth-art {
+    background: #f1b7a2;
+    position: relative;
+    overflow: hidden;
+  }
+  .earth .cube-art {
+    width: 310px;
+    right: -46px;
+    top: 54px;
+    transform: rotate(-4deg);
+  }
+  .earth .cube-art .t {
+    fill: #f2e8d9;
+  }
+  .earth .cube-art .l {
+    fill: #7e8660;
+  }
+  .earth .cube-art .r {
+    fill: #741f33;
+  }
+  .earth .cube-art polygon {
+    stroke: #201a17;
+  }
+  .earth .folio {
+    position: absolute;
+    left: 28px;
+    bottom: 25px;
+    font:
+      600 9px ui-monospace,
+      monospace;
+    letter-spacing: 0.12em;
+  }
+  .earth .red-rule {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 12px;
+    background: #741f33;
+  }
+  .pop {
+    background: #fffdf5;
+    color: #090909;
+    font-family: system-ui, sans-serif;
+    border-top: 0;
+  }
+  .pop .mini-nav {
+    border-bottom: 3px solid #090909;
+  }
+  .pop .mini-cta {
+    background: #090909;
+    color: #fffdf5;
+  }
+  .pop .circle {
+    position: absolute;
+    border: 3px solid #090909;
+    border-radius: 50%;
+  }
+  .pop .c1 {
+    width: 190px;
+    height: 190px;
+    background: #ffda2d;
+    left: -48px;
+    top: 90px;
+  }
+  .pop .c2 {
+    width: 132px;
+    height: 132px;
+    background: #3ad8ff;
+    right: 35px;
+    top: 90px;
+  }
+  .pop .pink {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 38%;
+    height: 175px;
+    background: #ff3d9a;
+    border: 3px solid #090909;
+  }
+  .pop h3 {
+    position: absolute;
+    z-index: 4;
+    left: 50%;
+    top: 80px;
+    transform: translateX(-50%);
+    width: 88%;
+    font-size: 62px;
+    line-height: 0.88;
+    letter-spacing: -0.06em;
+    text-align: center;
+    font-weight: 900;
+    margin: 0;
+    text-transform: uppercase;
+  }
+  .pop .cube-art {
+    width: 275px;
+    left: 50%;
+    top: 190px;
+    transform: translateX(-50%) rotate(2deg);
+  }
+  .pop .cube-art .t {
+    fill: #ffda2d;
+  }
+  .pop .cube-art .l {
+    fill: #3ad8ff;
+  }
+  .pop .cube-art .r {
+    fill: #ff3d9a;
+  }
+  .pop .cube-art polygon {
+    stroke: #090909;
+    stroke-width: 3;
+  }
+  .pop .pop-action {
+    position: absolute;
+    z-index: 5;
+    bottom: 33px;
+    left: 30px;
+    padding: 10px 16px;
+    border-radius: 99px;
+    background: #090909;
+    color: #fffdf5;
+    font-size: 10px;
+    font-weight: 800;
+  }
+  .pop .project-chip {
+    position: absolute;
+    z-index: 5;
+    right: 36px;
+    bottom: 41px;
+    font-size: 18px;
+    font-weight: 900;
+  }
+  .night {
+    background: #0d0d0b;
+    color: #efe5d3;
+    font-family: system-ui, sans-serif;
+  }
+  .night:before {
+    content: "";
+    position: absolute;
+    width: 390px;
+    height: 390px;
+    right: 28px;
+    top: 90px;
+    border-radius: 50%;
+    background: #b46d4530;
+    filter: blur(45px);
+  }
+  .night .mini-nav {
+    margin: 14px 20px 0;
+    height: 48px;
+    border: 1px solid #efe5d333;
+    border-radius: 99px;
+    background: #11110fe8;
+  }
+  .night .mini-cta {
+    background: #efe5d3;
+    color: #0d0d0b;
+  }
+  .night .night-grid {
+    display: grid;
+    grid-template-columns: 58% 42%;
+    min-height: 472px;
+    position: relative;
+    z-index: 2;
+  }
+  .night .night-copy {
+    padding: 62px 34px;
+  }
+  .night h3 {
+    font-size: 56px;
+    line-height: 0.91;
+    letter-spacing: -0.055em;
+    font-weight: 500;
+    margin: 14px 0 24px;
+  }
+  .night p {
+    color: #efe5d3aa;
+    font-size: 12px;
+    max-width: 360px;
+    line-height: 1.5;
+  }
+  .night .buttons {
+    display: flex;
+    gap: 8px;
+  }
+  .night .buttons span {
+    padding: 10px 15px;
+    border-radius: 99px;
+    border: 1px solid #efe5d355;
+    font-size: 10px;
+  }
+  .night .buttons span:first-child {
+    background: #efe5d3;
+    color: #0d0d0b;
+  }
+  .night .bezel {
+    margin: 55px 30px 35px 0;
+    border: 1px solid #efe5d333;
+    border-radius: 28px;
+    padding: 7px;
+    background: #ffffff08;
+    position: relative;
+  }
+  .night .bezel-core {
+    height: 100%;
+    border-radius: 21px;
+    background: #121511;
+    overflow: hidden;
+    position: relative;
+  }
+  .night .cube-art {
+    width: 285px;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+  }
+  .night .cube-art .t {
+    fill: #efe5d3;
+  }
+  .night .cube-art .l {
+    fill: #4b5b4a;
+  }
+  .night .cube-art .r {
+    fill: #b46d45;
+  }
+  .night .cube-art polygon {
+    stroke: #d84a3a;
+  }
+  .night .copper-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 58px;
+    background: #b46d45;
+    color: #0d0d0b;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    font-size: 10px;
+    font-weight: 700;
+  }
+  @media (max-width: 760px) {
+    .preview {
+      min-height: 620px;
+    }
+    .design-caption {
+      flex-direction: column;
+    }
+    .swiss h3,
+    .pop h3 {
+      font-size: 46px;
+    }
+    .swiss .cube-art {
+      width: 270px;
+      right: -80px;
+      top: 220px;
+    }
+    .swiss .yellow {
+      left: 50%;
+      top: 195px;
+      height: 320px;
+    }
+    .chrome h3 {
+      font-size: 41px;
+    }
+    .chrome .plinth {
+      left: 5%;
+      right: 5%;
+    }
+    .earth .earth-grid,
+    .night .night-grid {
+      grid-template-columns: 1fr;
+    }
+    .earth .earth-art {
+      min-height: 260px;
+    }
+    .earth h3,
+    .night h3 {
+      font-size: 44px;
+    }
+    .earth .cube-art {
+      width: 240px;
+    }
+    .night .bezel {
+      margin: 0 22px 28px;
+      height: 260px;
+    }
+    .pop .cube-art {
+      top: 250px;
+    }
+  }
+</style>
+<h2>Five different worlds for Irfan</h2>
+<p class="subtitle">
+  Each uses the same truthful content and Cube Unicorn. Click the direction you
+  want to develop, then tell me what to keep or change.
+</p>
+<div class="design-list">
+  <div
+    class="design-option"
+    data-choice="signal-circuit"
+    onclick="toggleSelect(this)"
+  >
+    <div class="preview swiss">
+      <div class="mini-nav">
+        <b>IRFAN HOSSAIN</b>
+        <div class="mini-links">
+          <span>WORK</span><span>ABOUT</span
+          ><span class="mini-cta">HIRE ME</span>
+        </div>
+      </div>
+      <div class="yellow"></div>
+      <span class="hero-label" style="position: absolute; left: 28px; top: 86px"
+        >FULL-STACK DEVELOPER · DHAKA</span
+      >
+      <h3>I build digital<br />products and<br />physical systems.</h3>
+      <svg class="cube-art" viewBox="0 0 220 220">
+        <polygon class="t" points="110,18 194,62 110,110 26,62" />
+        <polygon class="l" points="26,62 110,110 110,204 26,156" />
+        <polygon class="r" points="194,62 110,110 110,204 194,156" />
+      </svg>
+      <div class="actions"><span>HIRE ME</span><span>SELECTED WORK</span></div>
+      <div class="swiss-strip">
+        <span>WEB PRODUCTS</span><i></i><span>APIs & SYSTEMS</span><i></i
+        ><span>MOBILE</span><i></i><span>IoT</span>
+      </div>
+    </div>
+    <div class="design-caption">
+      <b>A — Signal / Circuit</b
+      ><span
+        >Atomic Swiss. Hard rules, typographic collision, vermilion/cobalt/acid
+        yellow, no softness.</span
+      >
+    </div>
+  </div>
+  <div
+    class="design-option"
+    data-choice="monsoon-chrome"
+    onclick="toggleSelect(this)"
+  >
+    <div class="preview chrome">
+      <div class="mini-nav">
+        <b>Irfan Hossain</b>
+        <div class="mini-links">
+          <span>Work</span><span>About</span><span>Contact</span
+          ><span class="mini-cta">Hire me</span>
+        </div>
+      </div>
+      <div class="chrome-copy">
+        <span class="hero-label">FULL-STACK DEVELOPER · DHAKA</span>
+        <h3>I build digital products<br />and physical systems.</h3>
+        <div class="buttons">
+          <span>Hire me</span><span>Selected work</span>
+        </div>
+      </div>
+      <div class="plinth"></div>
+      <svg class="cube-art" viewBox="0 0 220 220">
+        <polygon class="t" points="110,18 194,62 110,110 26,62" />
+        <polygon class="l" points="26,62 110,110 110,204 26,156" />
+        <polygon class="r" points="194,62 110,110 110,204 194,156" />
+      </svg>
+      <div class="plate p1"><b>BTEB Flow</b><br /><br />Education product</div>
+      <div class="plate p2"><b>SMD Station</b><br /><br />Embedded system</div>
+    </div>
+    <div class="design-caption">
+      <b>B — Monsoon Chrome</b
+      ><span
+        >Quiet product-industrial luxury. Fog, graphite, moss and machined
+        plates arranged on a strict center axis.</span
+      >
+    </div>
+  </div>
+  <div
+    class="design-option"
+    data-choice="field-notes"
+    onclick="toggleSelect(this)"
+  >
+    <div class="preview earth">
+      <div class="mini-nav">
+        <b>IRFAN HOSSAIN</b>
+        <div class="mini-links">
+          <span>JOURNAL</span><span>WORK</span
+          ><span class="mini-cta">HIRE ME</span>
+        </div>
+      </div>
+      <div class="earth-grid">
+        <div class="earth-copy">
+          <span class="hero-label">DHAKA, BANGLADESH</span>
+          <h3>Digital products.<br />Physical systems.</h3>
+          <p>
+            Full-stack developer working across web products, backend systems,
+            mobile, IoT, and electronics.
+          </p>
+          <div class="folio">AVAILABLE FOR INTERNSHIPS + FREELANCE</div>
+        </div>
+        <div class="earth-art">
+          <svg class="cube-art" viewBox="0 0 220 220">
+            <polygon class="t" points="110,18 194,62 110,110 26,62" />
+            <polygon class="l" points="26,62 110,110 110,204 26,156" />
+            <polygon class="r" points="194,62 110,110 110,204 194,156" />
+          </svg>
+        </div>
+      </div>
+      <div class="red-rule"></div>
+    </div>
+    <div class="design-caption">
+      <b>C — Field Notes</b
+      ><span
+        >Earth-toned editorial magazine. Parchment grain, oxblood, olive,
+        asymmetrical storytelling and sculptural imagery.</span
+      >
+    </div>
+  </div>
+  <div
+    class="design-option"
+    data-choice="circuit-pop"
+    onclick="toggleSelect(this)"
+  >
+    <div class="preview pop">
+      <div class="mini-nav">
+        <b>IRFAN HOSSAIN</b>
+        <div class="mini-links">
+          <span>WORK</span><span>ABOUT</span
+          ><span class="mini-cta">HIRE ME</span>
+        </div>
+      </div>
+      <div class="circle c1"></div>
+      <div class="circle c2"></div>
+      <div class="pink"></div>
+      <h3>I build digital products<br />and physical systems.</h3>
+      <svg class="cube-art" viewBox="0 0 220 220">
+        <polygon class="t" points="110,18 194,62 110,110 26,62" />
+        <polygon class="l" points="26,62 110,110 110,204 26,156" />
+        <polygon class="r" points="194,62 110,110 110,204 194,156" /></svg
+      ><span class="pop-action">HIRE ME</span
+      ><span class="project-chip">BTEB FLOW ↗</span>
+    </div>
+    <div class="design-caption">
+      <b>D — Circuit Pop Workshop</b
+      ><span
+        >Disciplined Bauhaus energy. Sunflower, cyan, hot pink, heavy type and
+        bold physical-computing shapes.</span
+      >
+    </div>
+  </div>
+  <div
+    class="design-option"
+    data-choice="nocturne-copper"
+    onclick="toggleSelect(this)"
+  >
+    <div class="preview night">
+      <div class="mini-nav">
+        <b>Irfan Hossain</b>
+        <div class="mini-links">
+          <span>Work</span><span>About</span><span>Contact</span
+          ><span class="mini-cta">Hire me</span>
+        </div>
+      </div>
+      <div class="night-grid">
+        <div class="night-copy">
+          <span class="hero-label" style="color: #b46d45"
+            >FULL-STACK DEVELOPER · DHAKA</span
+          >
+          <h3>I build digital products and physical systems.</h3>
+          <p>
+            From software interfaces to embedded systems and electronics—built
+            end to end.
+          </p>
+          <div class="buttons">
+            <span>Hire me</span><span>Selected work</span>
+          </div>
+        </div>
+        <div class="bezel">
+          <div class="bezel-core">
+            <svg class="cube-art" viewBox="0 0 220 220">
+              <polygon class="t" points="110,18 194,62 110,110 26,62" />
+              <polygon class="l" points="26,62 110,110 110,204 26,156" />
+              <polygon class="r" points="194,62 110,110 110,204 194,156" />
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="copper-bar">
+        <span>BTEB FLOW</span><span>AMARHISAB</span><span>SMD REWORK</span
+        ><span>SOLDERING</span>
+      </div>
+    </div>
+    <div class="design-caption">
+      <b>E — Nocturne Copper</b
+      ><span
+        >Midnight precision workshop. Obsidian, bone, copper and sage with
+        machined double-bezel depth.</span
+      >
+    </div>
+  </div>
+</div>

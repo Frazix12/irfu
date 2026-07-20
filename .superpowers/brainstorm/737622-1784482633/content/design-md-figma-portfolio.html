@@ -1,0 +1,404 @@
+<style>
+  .figma-page {
+    font-family: Inter, Geist, system-ui, sans-serif;
+    background: #fff;
+    color: #000;
+    border: 1px solid #dedede;
+    overflow: hidden;
+    min-height: 920px;
+  }
+  .figma-page * {
+    box-sizing: border-box;
+  }
+  .fnav {
+    height: 58px;
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+  }
+  .flogo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 540;
+  }
+  .flogo-mark {
+    display: grid;
+    grid-template-columns: repeat(2, 8px);
+    grid-template-rows: repeat(3, 8px);
+    width: 16px;
+  }
+  .flogo-mark i {
+    display: block;
+    border-radius: 8px;
+  }
+  .flogo-mark i:nth-child(1) {
+    background: #ff6b5b;
+  }
+  .flogo-mark i:nth-child(2) {
+    background: #ff9f1c;
+  }
+  .flogo-mark i:nth-child(3) {
+    background: #a66cff;
+  }
+  .flogo-mark i:nth-child(4) {
+    background: #48c6ef;
+  }
+  .flogo-mark i:nth-child(5) {
+    background: #35c98f;
+  }
+  .flinks {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    font-size: 14px;
+    font-weight: 330;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 8px 24px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 480;
+  }
+  .pill.black {
+    background: #000;
+    color: #fff;
+  }
+  .fhero {
+    min-height: 565px;
+    padding: 66px 42px 50px;
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    align-items: center;
+    position: relative;
+  }
+  .fcopy {
+    position: relative;
+    z-index: 2;
+  }
+  .eyebrow {
+    font:
+      400 11px/1 figmaMono,
+      "JetBrains Mono",
+      monospace;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 23px;
+  }
+  .fcopy h3 {
+    font-size: 76px;
+    line-height: 0.97;
+    letter-spacing: -2.2px;
+    font-weight: 340;
+    margin: 0;
+    max-width: 760px;
+  }
+  .fcopy p {
+    font-size: 19px;
+    line-height: 1.4;
+    letter-spacing: -0.14px;
+    font-weight: 330;
+    max-width: 460px;
+    margin: 26px 0;
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .text-link {
+    font-size: 17px;
+    font-weight: 480;
+  }
+  .cube-space {
+    height: 420px;
+    position: relative;
+    display: grid;
+    place-items: center;
+  }
+  .cube-space:before,
+  .cube-space:after {
+    content: "";
+    position: absolute;
+    border-radius: 6px;
+  }
+  .cube-space:before {
+    width: 92px;
+    height: 92px;
+    background: #c8f169;
+    left: 8%;
+    top: 14%;
+    transform: rotate(-7deg);
+  }
+  .cube-space:after {
+    width: 76px;
+    height: 76px;
+    background: #ffc7e8;
+    right: 3%;
+    bottom: 13%;
+    transform: rotate(8deg);
+  }
+  .cube-space svg {
+    width: 360px;
+    z-index: 2;
+    animation: floaty 7s ease-in-out infinite;
+  }
+  .note {
+    position: absolute;
+    padding: 10px 12px;
+    border-radius: 6px;
+    font:
+      400 10px/1.2 "JetBrains Mono",
+      monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    z-index: 3;
+  }
+  .note.web {
+    background: #dacbff;
+    top: 10%;
+    right: 8%;
+    transform: rotate(3deg);
+  }
+  .note.iot {
+    background: #bdf3dc;
+    bottom: 8%;
+    left: 3%;
+    transform: rotate(-4deg);
+  }
+  .marquee {
+    height: 42px;
+    background: #000;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 14px;
+    font-weight: 330;
+    letter-spacing: -0.1px;
+  }
+  .marquee span {
+    animation: slide 18s linear infinite;
+  }
+  .project-block {
+    margin: 72px 30px;
+    background: #c8f169;
+    border-radius: 24px;
+    padding: 48px;
+    min-height: 310px;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 48px;
+    align-items: center;
+  }
+  .project-block h4 {
+    font-size: 55px;
+    line-height: 1.05;
+    letter-spacing: -1.1px;
+    font-weight: 340;
+    margin: 14px 0;
+  }
+  .project-block p {
+    font-size: 19px;
+    line-height: 1.42;
+    font-weight: 330;
+    max-width: 410px;
+  }
+  .project-preview {
+    height: 220px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 18px;
+    display: grid;
+    grid-template-columns: 85px 1fr;
+    gap: 14px;
+    transform: rotate(1deg);
+  }
+  .side {
+    background: #000;
+    border-radius: 6px;
+  }
+  .dashboard {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 14px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  .dashboard i {
+    background: #f3f3f3;
+    border-radius: 6px;
+  }
+  .dashboard i:first-child {
+    grid-column: span 2;
+    background: #dacbff;
+  }
+  .choice-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .choice {
+    cursor: pointer;
+    padding: 12px 18px;
+    border-radius: 50px;
+    border: 1px solid #000;
+    background: #fff;
+    font-size: 14px;
+    font-weight: 480;
+  }
+  .choice[data-choice="approve-figma-system"] {
+    background: #000;
+    color: #fff;
+  }
+  @keyframes floaty {
+    50% {
+      transform: translateY(-16px) rotate(2deg);
+    }
+  }
+  @keyframes slide {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  @media (max-width: 800px) {
+    .flinks span {
+      display: none;
+    }
+    .fhero {
+      grid-template-columns: 1fr;
+      padding: 48px 24px 30px;
+    }
+    .fcopy h3 {
+      font-size: 49px;
+      letter-spacing: -1.3px;
+    }
+    .cube-space {
+      height: 310px;
+    }
+    .cube-space svg {
+      width: 275px;
+    }
+    .project-block {
+      margin: 48px 0;
+      border-radius: 0;
+      grid-template-columns: 1fr;
+      padding: 38px 24px;
+    }
+    .project-block h4 {
+      font-size: 44px;
+    }
+    .figma-page {
+      min-height: 1200px;
+    }
+  }
+</style>
+<h2>Updated DESIGN.md — applied</h2>
+<p class="subtitle">
+  Monochrome frame, editorial type, black pill CTA, pastel storytelling blocks,
+  no gradients or decorative shadows.
+</p>
+<div class="figma-page">
+  <nav class="fnav">
+    <div class="flogo">
+      <span class="flogo-mark"><i></i><i></i><i></i><i></i><i></i></span>Irfan
+      Hossain
+    </div>
+    <div class="flinks">
+      <span>Work</span><span>About</span><span>Contact</span
+      ><span class="pill black">Hire me</span>
+    </div>
+  </nav>
+  <section class="fhero">
+    <div class="fcopy">
+      <div class="eyebrow">Full-stack developer · Dhaka</div>
+      <h3>I build across screens and circuits.</h3>
+      <p>
+        Digital products, backend systems, mobile experiences, IoT and
+        electronics—built end to end.
+      </p>
+      <div class="actions">
+        <span class="pill black">Hire me ↗</span
+        ><span class="text-link">See my work ↓</span>
+      </div>
+    </div>
+    <div class="cube-space">
+      <span class="note web">Web products</span
+      ><span class="note iot">IoT + electronics</span
+      ><svg viewBox="0 0 260 260">
+        <polygon
+          points="130,18 234,75 130,134 26,75"
+          fill="#f4efc6"
+          stroke="#000"
+          stroke-width="3"
+        />
+        <polygon
+          points="26,75 130,134 130,240 26,181"
+          fill="#dacbff"
+          stroke="#000"
+          stroke-width="3"
+        />
+        <polygon
+          points="234,75 130,134 130,240 234,181"
+          fill="#ff8f7e"
+          stroke="#000"
+          stroke-width="3"
+        />
+        <path
+          d="M130 18v116M26 75l104 59 104-59"
+          fill="none"
+          stroke="#000"
+          stroke-width="3"
+        />
+      </svg>
+    </div>
+  </section>
+  <div class="marquee">
+    <span
+      >WEB PRODUCTS&nbsp;&nbsp;✦&nbsp;&nbsp;APIS &
+      SYSTEMS&nbsp;&nbsp;✦&nbsp;&nbsp;MOBILE&nbsp;&nbsp;✦&nbsp;&nbsp;IOT&nbsp;&nbsp;✦&nbsp;&nbsp;ELECTRONICS&nbsp;&nbsp;✦&nbsp;&nbsp;WEB
+      PRODUCTS&nbsp;&nbsp;✦&nbsp;&nbsp;APIS &
+      SYSTEMS&nbsp;&nbsp;✦&nbsp;&nbsp;MOBILE&nbsp;&nbsp;✦&nbsp;&nbsp;IOT&nbsp;&nbsp;✦&nbsp;&nbsp;ELECTRONICS&nbsp;&nbsp;✦&nbsp;&nbsp;</span
+    >
+  </div>
+  <section class="project-block">
+    <div>
+      <div class="eyebrow">01 / Selected work</div>
+      <h4>BTEB Flow</h4>
+      <p>
+        Learning resources, tools and opportunities for Bangladesh's technical
+        education students.
+      </p>
+      <span class="pill black">View project ↗</span>
+    </div>
+    <div class="project-preview">
+      <div class="side"></div>
+      <div class="dashboard"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+  </section>
+</div>
+<div class="choice-row options">
+  <button
+    class="choice"
+    data-choice="approve-figma-system"
+    onclick="toggleSelect(this)"
+  >
+    Use this system</button
+  ><button
+    class="choice"
+    data-choice="revise-figma-system"
+    onclick="toggleSelect(this)"
+  >
+    Revise it
+  </button>
+</div>

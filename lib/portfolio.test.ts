@@ -11,14 +11,26 @@ describe("portfolio content", () => {
 		]);
 	});
 
-	it("keeps cinematic scene tones in the approved order", () => {
+	it("matches each scene tone to its project image", () => {
 		expect(projects.map((project) => project.tone)).toEqual([
-			"lilac",
-			"mint",
-			"coral",
-			"navy",
+			"bteb",
+			"amar",
+			"smd",
+			"soldering",
 		]);
 		expect(projects.every((project) => !("gridClass" in project))).toBe(true);
+	});
+
+	it("uses the captured project artwork", () => {
+		expect(
+			Object.fromEntries(
+				projects.map((project) => [project.slug, project.image]),
+			),
+		).toMatchObject({
+			"bteb-flow": "/assets/bteb-flow.png",
+			"amar-hisab": "/assets/amar-hisab.png",
+			"smd-rework-station": "/projects/smd-rework.jpeg",
+		});
 	});
 
 	it("uses email as the primary hiring destination", () => {

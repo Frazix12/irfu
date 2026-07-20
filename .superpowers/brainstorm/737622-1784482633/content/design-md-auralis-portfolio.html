@@ -1,0 +1,382 @@
+<style>
+  .auralis {
+    font-family: Geist, Inter, Arial, sans-serif;
+    background: #fff;
+    color: #111827;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 680px;
+    position: relative;
+    box-shadow: 0 24px 70px #191c2118;
+  }
+  .auralis * {
+    box-sizing: border-box;
+  }
+  .warm-stage {
+    position: absolute;
+    inset: 0 0 0 auto;
+    width: 68%;
+    overflow: hidden;
+    background:
+      radial-gradient(circle at 72% 46%, #fda4af 0, transparent 23%),
+      radial-gradient(circle at 58% 60%, #f97316 0, transparent 31%),
+      radial-gradient(circle at 84% 15%, #fdba74 0, transparent 38%), #fff7ed;
+  }
+  .warm-stage:before {
+    content: "";
+    position: absolute;
+    width: 620px;
+    height: 620px;
+    right: -70px;
+    top: 18px;
+    border-radius: 44% 56% 54% 46%;
+    background: conic-gradient(
+      from 20deg,
+      #ea580c,
+      #fdba74,
+      #fda4af,
+      #fff7ed,
+      #ea580c
+    );
+    filter: blur(38px);
+    opacity: 0.78;
+    animation: drift 10s ease-in-out infinite alternate;
+  }
+  .glass-slices {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .glass-slices i {
+    border-left: 1px solid #ffffff88;
+    background: linear-gradient(90deg, #fffef8 0%, #ffffff18 100%);
+    backdrop-filter: blur(9px);
+  }
+  .glass-slices i:nth-child(1) {
+    opacity: 0.96;
+  }
+  .glass-slices i:nth-child(2) {
+    opacity: 0.72;
+  }
+  .glass-slices i:nth-child(3) {
+    opacity: 0.46;
+  }
+  .glass-slices i:nth-child(4) {
+    opacity: 0.25;
+  }
+  .glass-slices i:nth-child(5) {
+    opacity: 0.1;
+  }
+  .cube-wrap {
+    position: absolute;
+    right: 7%;
+    top: 20%;
+    width: 390px;
+    height: 390px;
+    display: grid;
+    place-items: center;
+    filter: drop-shadow(0 55px 40px #9a341e55);
+    animation: float 7s ease-in-out infinite;
+  }
+  .cube-wrap:after {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 38px;
+    bottom: 22px;
+    border-radius: 50%;
+    background: #7c2d1230;
+    filter: blur(12px);
+  }
+  .cube-wrap svg {
+    width: 100%;
+    z-index: 1;
+  }
+  .nav {
+    height: 78px;
+    padding: 0 38px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    z-index: 5;
+    border-bottom: 1px solid #ffffff77;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 650;
+    letter-spacing: -0.04em;
+  }
+  .brand-mark {
+    width: 25px;
+    height: 25px;
+    border-radius: 7px;
+    background: #ea580c;
+    display: grid;
+    place-items: center;
+    color: white;
+    font-size: 15px;
+  }
+  .links {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .nav-cta {
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: #191c21;
+    color: #fff;
+  }
+  .hero {
+    position: relative;
+    z-index: 3;
+    padding: 76px 40px 42px;
+    max-width: 620px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    padding: 8px 12px;
+    font:
+      600 10px/1 JetBrains Mono,
+      monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #9a3412;
+    clip-path: polygon(
+      8px 0,
+      100% 0,
+      100% calc(100% - 8px),
+      calc(100% - 8px) 100%,
+      0 100%,
+      0 8px
+    );
+    background:
+      linear-gradient(#ffedd5cc, #ffedd5cc) padding-box,
+      linear-gradient(135deg, #fdba74, #fda4af) border-box;
+    border: 1px solid transparent;
+  }
+  .hero h1 {
+    font-size: 61px;
+    line-height: 1.01;
+    letter-spacing: -0.055em;
+    font-weight: 500;
+    margin: 22px 0 22px;
+    max-width: 590px;
+  }
+  .hero p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #4b5563;
+    max-width: 420px;
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 28px;
+  }
+  .primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 13px 18px;
+    border-radius: 8px;
+    background: #191c21;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 2px 3px #0002;
+  }
+  .primary em {
+    font-style: normal;
+    color: #fdba74;
+  }
+  .secondary {
+    font-size: 12px;
+    font-weight: 600;
+    color: #374151;
+  }
+  .capabilities {
+    position: relative;
+    z-index: 4;
+    margin: 12px 40px 34px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    max-width: 640px;
+  }
+  .cap {
+    padding: 18px;
+    background: #ffffffc7;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    backdrop-filter: blur(14px);
+    box-shadow: 0 2px 3px -1px #00000018;
+  }
+  .cap b {
+    font-size: 13px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 5px;
+  }
+  .cap span {
+    font:
+      500 9px/1.4 JetBrains Mono,
+      monospace;
+    color: #6b7280;
+    text-transform: uppercase;
+  }
+  .choice-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+  }
+  .choice {
+    cursor: pointer;
+    padding: 12px 16px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    font-size: 12px;
+    font-weight: 650;
+  }
+  .choice[data-choice="approve-design-md"] {
+    background: #ea580c;
+    color: #fff;
+    border-color: #ea580c;
+  }
+  @keyframes float {
+    to {
+      transform: translateY(-16px) rotate(1deg);
+    }
+  }
+  @keyframes drift {
+    to {
+      transform: translate(-50px, 25px) rotate(18deg);
+    }
+  }
+  @media (max-width: 800px) {
+    .links span {
+      display: none;
+    }
+    .warm-stage {
+      width: 100%;
+      opacity: 0.7;
+    }
+    .cube-wrap {
+      width: 280px;
+      right: -75px;
+      top: 20%;
+    }
+    .hero {
+      padding: 62px 24px 30px;
+    }
+    .hero h1 {
+      font-size: 44px;
+      max-width: 460px;
+    }
+    .hero p {
+      max-width: 320px;
+    }
+    .capabilities {
+      margin: 10px 24px 28px;
+      grid-template-columns: 1fr;
+    }
+    .nav {
+      padding: 0 24px;
+    }
+    .auralis {
+      min-height: 820px;
+    }
+  }
+</style>
+<h2>DESIGN.md adapted for Irfan</h2>
+<p class="subtitle">
+  Same Auralis first-screen signal: white editorial surface, warm WebGL
+  atmosphere, glass slices, focused conversion path, and compact capability
+  cards.
+</p>
+<div class="auralis">
+  <div class="warm-stage">
+    <div class="cube-wrap">
+      <svg viewBox="0 0 260 260">
+        <defs>
+          <linearGradient id="top" x1="0" y1="0" x2="1" y2="1">
+            <stop stop-color="#fff7ed" />
+            <stop offset="1" stop-color="#fdba74" />
+          </linearGradient>
+          <linearGradient id="left" x1="0" y1="0" x2="1" y2="1">
+            <stop stop-color="#fda4af" />
+            <stop offset="1" stop-color="#e11d48" />
+          </linearGradient>
+          <linearGradient id="right" x1="0" y1="0" x2="1" y2="1">
+            <stop stop-color="#ea580c" />
+            <stop offset="1" stop-color="#7c2d12" />
+          </linearGradient>
+        </defs>
+        <polygon points="130,22 232,78 130,136 28,78" fill="url(#top)" />
+        <polygon points="28,78 130,136 130,238 28,180" fill="url(#left)" />
+        <polygon points="232,78 130,136 130,238 232,180" fill="url(#right)" />
+        <path
+          d="M130 22v114M28 78l102 58 102-58"
+          fill="none"
+          stroke="#fff"
+          stroke-opacity=".52"
+          stroke-width="2"
+        />
+      </svg>
+    </div>
+    <div class="glass-slices"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>
+  <nav class="nav">
+    <div class="brand"><span class="brand-mark">I</span> Irfan Hossain</div>
+    <div class="links">
+      <span>Work</span><span>About</span><span>Contact</span
+      ><span class="nav-cta">Hire me</span>
+    </div>
+  </nav>
+  <main class="hero">
+    <span class="eyebrow">Full-stack / Embedded</span>
+    <h1>Digital products.<br />Physical systems.<br />Built end to end.</h1>
+    <p>
+      Web, mobile, backend, IoT and electronics—designed and built from Dhaka.
+    </p>
+    <div class="actions">
+      <span class="primary">Hire Irfan <em>↗</em></span
+      ><span class="secondary">Selected work ↓</span>
+    </div>
+  </main>
+  <div class="capabilities">
+    <div class="cap">
+      <b>Web & Mobile</b><span>Products people can use</span>
+    </div>
+    <div class="cap">
+      <b>APIs & Systems</b><span>Reliable foundations</span>
+    </div>
+    <div class="cap">
+      <b>IoT & Electronics</b><span>Screen to circuit</span>
+    </div>
+  </div>
+</div>
+<div class="choice-row options">
+  <button
+    class="choice"
+    data-choice="approve-design-md"
+    onclick="toggleSelect(this)"
+  >
+    Use this direction</button
+  ><button
+    class="choice"
+    data-choice="revise-design-md"
+    onclick="toggleSelect(this)"
+  >
+    Revise this direction
+  </button>
+</div>
