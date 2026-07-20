@@ -31,6 +31,13 @@ describe("cinematic cursor", () => {
 		expect(cursorSource).not.toContain("useState");
 	});
 
+	it("opens action labels only for interactive hover targets", () => {
+		expect(cursorSource).toContain(
+			'target?.matches("a, button, summary") ?? false',
+		);
+		expect(cursorSource).toContain("label.textContent = isInteractive");
+	});
+
 	it("cleans up native cursor replacement and pointer listeners", () => {
 		expect(cursorSource).toContain(
 			'document.documentElement.classList.add("has-cinematic-cursor")',

@@ -51,6 +51,27 @@ describe("cinematic surface styling", () => {
 		);
 	});
 
+	it("keeps the reticle compact and detaches action labels", () => {
+		const cursorStyles =
+			styles.match(/\.cinematic-cursor\s*\{[\s\S]*?@media/)?.[0] ?? "";
+		const ringRule = styles.match(/\.cursor-ring\s*\{([^}]*)\}/)?.[1] ?? "";
+		const labelRule = styles.match(/\.cursor-label\s*\{([^}]*)\}/)?.[1] ?? "";
+
+		expect(ringRule).toMatch(/width:\s*2\.35rem/);
+		expect(ringRule).toMatch(/height:\s*2\.35rem/);
+		expect(cursorStyles).not.toMatch(
+			/\.cinematic-cursor\.is-(?:action|text) \.cursor-ring\s*\{[^}]*\b(?:width|height):/,
+		);
+		expect(labelRule).toMatch(/position:\s*absolute/);
+		expect(labelRule).toMatch(/left:\s*calc\(100% \+ 0\.75rem\)/);
+		expect(styles).toMatch(
+			/\.cinematic-cursor\.is-action \.cursor-label\s*\{[^}]*opacity:\s*1/,
+		);
+		expect(styles).not.toMatch(
+			/\.cinematic-cursor\.is-text \.cursor-label\s*\{[^}]*opacity:\s*1/,
+		);
+	});
+
 	it("uses an angular reticle and dash trails instead of a common circle", () => {
 		const ringRule = styles.match(/\.cursor-ring\s*\{([^}]*)\}/)?.[1] ?? "";
 		const trailRule =

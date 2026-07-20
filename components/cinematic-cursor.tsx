@@ -29,15 +29,15 @@ function updateCursorMode(
 	icon: HTMLElement,
 	target: HTMLElement | null,
 ) {
-	const mode = target?.dataset.cursorMode ?? (target ? "action" : "");
-	const fallback = target?.matches(".button")
-		? "GO"
-		: target?.matches("a, button, summary")
-			? "OPEN"
-			: "";
-	root.classList.toggle("is-action", mode === "action");
-	root.classList.toggle("is-text", mode === "text");
-	label.textContent = target?.dataset.cursor ?? fallback;
+	const isInteractive = target?.matches("a, button, summary") ?? false;
+	const isText = !isInteractive && target?.dataset.cursorMode === "text";
+	const fallback = target?.matches(".button") ? "GO" : "OPEN";
+
+	root.classList.toggle("is-action", isInteractive);
+	root.classList.toggle("is-text", isText);
+	label.textContent = isInteractive
+		? (target?.dataset.cursor ?? fallback)
+		: "";
 	icon.textContent = target?.dataset.cursorIcon ?? (target ? "↗" : "+");
 }
 
