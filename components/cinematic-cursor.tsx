@@ -35,9 +35,7 @@ function updateCursorMode(
 
 	root.classList.toggle("is-action", isInteractive);
 	root.classList.toggle("is-text", isText);
-	label.textContent = isInteractive
-		? (target?.dataset.cursor ?? fallback)
-		: "";
+	label.textContent = isInteractive ? (target?.dataset.cursor ?? fallback) : "";
 	icon.textContent = target?.dataset.cursorIcon ?? (target ? "↗" : "+");
 }
 
