@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 interface LenisSpy {
 	options: Record<string, unknown>;
@@ -103,6 +103,8 @@ describe("MotionRoot Lenis integration", () => {
 		vi.clearAllMocks();
 	});
 
+	afterEach(() => vi.unstubAllGlobals());
+
 	it("bridges one restrained Lenis instance to GSAP and fully cleans it up", () => {
 		const cleanup = mount();
 		const [lenis] = harness.instances;
@@ -110,7 +112,7 @@ describe("MotionRoot Lenis integration", () => {
 
 		expect(harness.instances).toHaveLength(1);
 		expect(lenis.options).toMatchObject({
-			anchors: true,
+			anchors: { onComplete: expect.any(Function) },
 			autoRaf: false,
 			lerp: 0.12,
 			smoothWheel: true,
@@ -132,6 +134,28 @@ describe("MotionRoot Lenis integration", () => {
 		expect(harness.tickerCallbacks).toHaveLength(1);
 		remountCleanup?.();
 		expect(harness.tickerCallbacks).toHaveLength(0);
+	});
+
+	it("focuses main after its anchor completes without stealing other anchor focus", () => {
+		const cleanup = mount();
+		const anchors = harness.instances[0].options.anchors as {
+			onComplete: () => void;
+		};
+		const focus = vi.fn();
+		const getElementById = vi.fn(() => ({ focus }));
+		vi.stubGlobal("document", { getElementById });
+		vi.stubGlobal("location", { hash: "#main" });
+
+		anchors.onComplete();
+		expect(getElementById).toHaveBeenCalledWith("main");
+		expect(focus).toHaveBeenCalledWith({ preventScroll: true });
+
+		for (const hash of ["#work", "#about", "#contact", "#top"]) {
+			location.hash = hash;
+			anchors.onComplete();
+		}
+		expect(focus).toHaveBeenCalledOnce();
+		cleanup?.();
 	});
 
 	it("leaves reduced-motion users on native scrolling", () => {

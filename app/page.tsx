@@ -251,7 +251,7 @@ export default function Home() {
 				Skip to content
 			</a>
 			<SiteNav />
-			<main id="main" className="cinematic-page">
+			<main id="main" className="cinematic-page" tabIndex={-1}>
 				<OpeningScene />
 				<IdentityScene />
 				<ProjectSequence />

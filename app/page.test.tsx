@@ -56,6 +56,12 @@ describe("cinematic portfolio structure", () => {
 		expect(html).toContain("data-contact");
 	});
 
+	it("renders a programmatically focusable main skip-link target", () => {
+		expect(html).toMatch(
+			/<main(?=[^>]*id="main")(?=[^>]*tabindex="-1")[^>]*>/,
+		);
+	});
+
 	it("preserves whitespace in the server-rendered hero heading", () => {
 		const heading = html.match(/<h1[^>]*>(.*?)<\/h1>/)?.[1];
 		expect(heading?.replace(/<[^>]+>/g, "")).toBe(

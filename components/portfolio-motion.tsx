@@ -4,7 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
+import Lenis, { type ScrollToOptions } from "lenis";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -16,8 +16,17 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 			const media = gsap.matchMedia();
 
 			media.add("(prefers-reduced-motion: no-preference)", () => {
+				const anchors = {
+					onComplete: () => {
+						if (location.hash === "#main") {
+							document
+								.getElementById("main")
+								?.focus({ preventScroll: true });
+						}
+					},
+				} satisfies ScrollToOptions;
 				const lenis = new Lenis({
-					anchors: true,
+					anchors,
 					autoRaf: false,
 					lerp: 0.12,
 					smoothWheel: true,
