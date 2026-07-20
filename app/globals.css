@@ -144,6 +144,7 @@ summary {
   left: 0;
   z-index: 20;
   width: 100%;
+  background: var(--ink);
 }
 
 .site-nav {
