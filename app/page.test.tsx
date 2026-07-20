@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
@@ -31,6 +32,7 @@ vi.mock("@/components/portfolio-motion", () => ({
 	MotionRoot: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
 
+import { socialLinks } from "@/lib/portfolio";
 import Home from "./page";
 
 const projectSlugs = [
@@ -39,6 +41,10 @@ const projectSlugs = [
 	"smd-rework-station",
 	"diy-soldering-station",
 ];
+const motionSource = readFileSync(
+	new URL("../components/portfolio-motion.tsx", import.meta.url),
+	"utf8",
+);
 
 describe("cinematic portfolio structure", () => {
 	const html = renderToStaticMarkup(<Home />);
@@ -77,5 +83,36 @@ describe("cinematic portfolio structure", () => {
 		expect(html).not.toContain("project-bento");
 		expect(html).not.toContain("project-accordion");
 		expect(html).not.toContain("stack-card");
+	});
+
+	it("keeps opening actions out of the intro tweens", () => {
+		expect(motionSource).not.toContain("[data-opening-actions]");
+	});
+
+	it("scopes the only identity pin to tablet and desktop distances", () => {
+		expect(motionSource.match(/pin: true/g)).toHaveLength(1);
+		expect(motionSource).toContain(
+			"(min-width: 960px) and (prefers-reduced-motion: no-preference)",
+		);
+		expect(motionSource).toContain(
+			"(min-width: 768px) and (max-width: 959px) and (prefers-reduced-motion: no-preference)",
+		);
+		expect(motionSource).toContain(
+			'context.conditions?.desktop ? "+=120%" : "+=70%"',
+		);
+	});
+
+	it("keeps the footer to essential navigation and verified public links", () => {
+		const footer = html.match(/<footer[^>]*>([\s\S]*?)<\/footer>/)?.[1] ?? "";
+
+		expect(footer).toContain('aria-label="Footer navigation"');
+		expect(footer).toContain('aria-label="Footer social links"');
+		for (const href of ["#work", "#about", "#contact"]) {
+			expect(footer).toContain(`href="${href}"`);
+		}
+		for (const link of socialLinks.slice(1)) {
+			expect(footer).toContain(`href="${link.href}"`);
+		}
+		expect(footer).not.toContain(socialLinks[0].href);
 	});
 });

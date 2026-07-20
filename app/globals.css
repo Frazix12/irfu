@@ -557,6 +557,19 @@ summary {
   font-weight: 600;
 }
 
+.footer-links {
+  display: grid;
+  gap: 0.25rem;
+  justify-items: end;
+}
+
+.footer-links nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0 1.25rem;
+}
+
 @media (max-width: 959px) {
   .nav-links {
     display: none;
@@ -709,6 +722,15 @@ summary {
   .site-footer {
     align-items: flex-start;
     flex-direction: column;
+  }
+
+  .footer-links {
+    width: 100%;
+    justify-items: start;
+  }
+
+  .footer-links nav {
+    justify-content: flex-start;
   }
 }
 

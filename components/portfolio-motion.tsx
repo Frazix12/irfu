@@ -35,29 +35,7 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 						"[data-opening-visual]",
 						{ opacity: 0, scale: 0.88, duration: 1.35 },
 						0.1,
-					)
-					.from(
-						"[data-opening-actions]",
-						{ opacity: 0, y: 18, duration: 0.5 },
-						0.65,
 					);
-
-				gsap.fromTo(
-					"[data-identity-word]",
-					{ opacity: 0.14 },
-					{
-						opacity: 1,
-						ease: "none",
-						stagger: 0.08,
-						scrollTrigger: {
-							trigger: "[data-identity]",
-							start: "top top",
-							end: "+=120%",
-							pin: true,
-							scrub: 1,
-						},
-					},
-				);
 
 				gsap.to("[data-field-track]", {
 					xPercent: -10,
@@ -70,6 +48,33 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 					},
 				});
 			});
+
+			media.add(
+				{
+					desktop:
+						"(min-width: 960px) and (prefers-reduced-motion: no-preference)",
+					tablet:
+						"(min-width: 768px) and (max-width: 959px) and (prefers-reduced-motion: no-preference)",
+				},
+				(context) => {
+					gsap.fromTo(
+						"[data-identity-word]",
+						{ opacity: 0.14 },
+						{
+							opacity: 1,
+							ease: "none",
+							stagger: 0.08,
+							scrollTrigger: {
+								trigger: "[data-identity]",
+								start: "top top",
+								end: context.conditions?.desktop ? "+=120%" : "+=70%",
+								pin: true,
+								scrub: 1,
+							},
+						},
+					);
+				},
+			);
 
 			media.add(
 				"(min-width: 768px) and (prefers-reduced-motion: no-preference)",
@@ -118,6 +123,22 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 			media.add(
 				"(max-width: 767px) and (prefers-reduced-motion: no-preference)",
 				() => {
+					gsap.fromTo(
+						"[data-identity-word]",
+						{ opacity: 0.14 },
+						{
+							opacity: 1,
+							ease: "none",
+							stagger: 0.08,
+							scrollTrigger: {
+								trigger: "[data-identity]",
+								start: "top 85%",
+								end: "center 45%",
+								scrub: 1,
+							},
+						},
+					);
+
 					gsap.utils
 						.toArray<HTMLElement>("[data-project-scene]")
 						.forEach((scene) => {

@@ -221,7 +221,25 @@ function SiteFooter() {
 				</Link>
 				<p>Full-Stack Developer · Dhaka, Bangladesh</p>
 			</div>
-			<Link href="#top">Back to top</Link>
+			<div className="footer-links">
+				<nav aria-label="Footer navigation">
+					<Link href="#work">Work</Link>
+					<Link href="#about">About</Link>
+					<Link href="#contact">Contact</Link>
+				</nav>
+				<nav aria-label="Footer social links">
+					{socialLinks.slice(1).map((link) => (
+						<Link
+							key={link.label}
+							href={link.href}
+							target="_blank"
+							rel="noreferrer"
+						>
+							{link.label}
+						</Link>
+					))}
+				</nav>
+			</div>
 		</footer>
 	);
 }
