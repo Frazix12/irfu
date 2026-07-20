@@ -536,6 +536,14 @@ summary {
   margin-top: 3rem;
 }
 
+.contact-location {
+  margin-top: 1.25rem;
+  color: rgb(17 18 20 / 68%);
+  font-size: 0.95rem;
+  font-style: normal;
+  letter-spacing: 0.04em;
+}
+
 .site-footer {
   position: relative;
   z-index: 2;

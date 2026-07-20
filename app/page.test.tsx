@@ -56,6 +56,16 @@ describe("cinematic portfolio structure", () => {
 		expect(html).toContain("data-contact");
 	});
 
+	it("includes the verified location inside the contact scene", () => {
+		const contact =
+			html.match(/<section[^>]*data-contact[^>]*>([\s\S]*?)<\/section>/)?.[1] ??
+			"";
+
+		expect(contact).toContain(
+			'<address class="contact-location">Dhaka, Bangladesh</address>',
+		);
+	});
+
 	it("renders a programmatically focusable main skip-link target", () => {
 		expect(html).toMatch(
 			/<main(?=[^>]*id="main")(?=[^>]*tabindex="-1")[^>]*>/,

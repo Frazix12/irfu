@@ -208,6 +208,7 @@ function ContactScene() {
 					</Link>
 				))}
 			</nav>
+			<address className="contact-location">Dhaka, Bangladesh</address>
 		</section>
 	);
 }
