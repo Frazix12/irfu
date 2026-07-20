@@ -236,12 +236,16 @@ summary {
 
 .title-word-mask {
   display: inline-block;
+  margin-inline: -0.06em;
+  margin-bottom: -0.14em;
   overflow: hidden;
+  padding-inline: 0.06em;
+  padding-bottom: 0.14em;
   vertical-align: bottom;
 }
 
 .title-word-mask:not(:last-child) {
-  margin-right: 0.2em;
+  margin-right: 0.14em;
 }
 
 .title-word-mask > span {
