@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
@@ -15,6 +16,19 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 			const media = gsap.matchMedia();
 
 			media.add("(prefers-reduced-motion: no-preference)", () => {
+				const lenis = new Lenis({
+					anchors: true,
+					autoRaf: false,
+					lerp: 0.12,
+					smoothWheel: true,
+					syncTouch: false,
+				});
+				const raf = (time: number) => lenis.raf(time * 1000);
+
+				lenis.on("scroll", ScrollTrigger.update);
+				gsap.ticker.add(raf);
+				gsap.ticker.lagSmoothing(0);
+
 				gsap
 					.timeline({ defaults: { ease: "power3.out" } })
 					.from("[data-opening-caption]", {
@@ -47,6 +61,12 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 						scrub: 1,
 					},
 				});
+
+				return () => {
+					gsap.ticker.remove(raf);
+					lenis.off("scroll", ScrollTrigger.update);
+					lenis.destroy();
+				};
 			});
 
 			media.add(
