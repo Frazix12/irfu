@@ -88,4 +88,17 @@ describe("cinematic surface styling", () => {
 			/\.cursor-trail::before\s*\{[\s\S]*?transform:\s*rotate\(-24deg\)/,
 		);
 	});
+
+	it("renders a masked local cloth-refraction field", () => {
+		const clothRule = styles.match(/\.cursor-cloth\s*\{([^}]*)\}/)?.[1] ?? "";
+
+		expect(clothRule).toMatch(/width:\s*10rem/);
+		expect(clothRule).toMatch(/height:\s*10rem/);
+		expect(clothRule).toMatch(/backdrop-filter:/);
+		expect(clothRule).toMatch(/mask-image:\s*radial-gradient/);
+		expect(clothRule).toMatch(/will-change:\s*transform/);
+		expect(styles).toMatch(
+			/\.cinematic-cursor\.is-action \.cursor-cloth\s*\{[^}]*opacity:/,
+		);
+	});
 });

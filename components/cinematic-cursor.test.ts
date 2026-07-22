@@ -46,6 +46,17 @@ describe("cinematic cursor", () => {
 			'document.documentElement.classList.remove("has-cinematic-cursor")',
 		);
 		expect(cursorSource).toContain("removeEventListener");
+		expect(cursorSource).toContain("clothMotion.kill()");
+	});
+
+	it("mounts and cleans up a velocity-reactive cloth lens", () => {
+		expect(cursorSource).toContain("function createClothMotion");
+		expect(cursorSource).toContain('className="cursor-cloth"');
+		expect(cursorSource).toContain("<feTurbulence");
+		expect(cursorSource).toContain("<feDisplacementMap");
+		expect(cursorSource).toContain('gsap.quickTo(element, "scaleX"');
+		expect(cursorSource).toContain("settle.restart(true)");
+		expect(cursorSource).toContain("settle.kill()");
 	});
 
 	it("mounts the cursor and marks cinematic interaction targets", () => {

@@ -109,7 +109,6 @@ summary {
 	display: none;
 	opacity: 0;
 	color: #000;
-	mix-blend-mode: difference;
 	pointer-events: none;
 	transition: opacity 180ms ease;
 }
@@ -124,7 +123,39 @@ summary {
 	position: fixed;
 	top: 0;
 	left: 0;
+	mix-blend-mode: difference;
 	will-change: transform;
+}
+
+.cursor-filter-defs {
+	position: absolute;
+	width: 0;
+	height: 0;
+	overflow: hidden;
+}
+
+.cursor-cloth {
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	width: 10rem;
+	height: 10rem;
+	border-radius: 42% 58% 54% 46% / 48% 44% 56% 52%;
+	background: rgb(255 255 255 / 1%);
+	-webkit-backdrop-filter: blur(0.9px) saturate(1.12) contrast(1.04);
+	backdrop-filter: blur(0.9px) saturate(1.12) contrast(1.04);
+	backdrop-filter: url("#cursor-cloth-distortion") blur(0.9px) saturate(1.12)
+		contrast(1.04);
+	mask-image: radial-gradient(
+		ellipse at center,
+		#000 0 34%,
+		rgb(0 0 0 / 82%) 48%,
+		transparent 72%
+	);
+	opacity: 0.68;
+	will-change: transform;
+	transition: opacity 360ms ease;
 }
 
 .cursor-ring {
@@ -273,6 +304,10 @@ summary {
 
 .cinematic-cursor.is-action .cursor-trail {
 	opacity: 0.05;
+}
+
+.cinematic-cursor.is-action .cursor-cloth {
+	opacity: 0.9;
 }
 
 .cinematic-cursor.is-pressed .cursor-ring {
