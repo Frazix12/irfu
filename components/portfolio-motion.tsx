@@ -77,36 +77,75 @@ export function MotionRoot({ children }: { children: React.ReactNode }) {
 				};
 			});
 
-			media.add("(prefers-reduced-motion: no-preference)", () => {
-				gsap
-					.timeline({
-						scrollTrigger: {
-							trigger: "[data-identity]",
-							start: "top top",
-							end: "bottom bottom",
-							scrub: 1,
-						},
-					})
-					.fromTo(
-						"[data-identity-word]",
-						{ filter: "blur(12px)", opacity: 0.08, yPercent: 70 },
-						{
-							filter: "blur(0px)",
-							opacity: 1,
-							yPercent: 0,
-							duration: 1,
-							ease: "none",
-							stagger: 0.1,
-						},
-						0,
-					)
-					.fromTo(
-						"[data-identity-progress]",
-						{ scaleY: 0 },
-						{ scaleY: 1, duration: 1.8, ease: "none" },
-						0,
-					);
-			});
+			/* Identity text reveal — desktop: long scrub */
+			media.add(
+				"(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+				() => {
+					gsap
+						.timeline({
+							scrollTrigger: {
+								trigger: "[data-identity]",
+								start: "top top",
+								end: "bottom bottom",
+								scrub: 1,
+							},
+						})
+						.fromTo(
+							"[data-identity-word]",
+							{ filter: "blur(12px)", opacity: 0.08, yPercent: 70 },
+							{
+								filter: "blur(0px)",
+								opacity: 1,
+								yPercent: 0,
+								duration: 1,
+								ease: "none",
+								stagger: 0.1,
+							},
+							0,
+						)
+						.fromTo(
+							"[data-identity-progress]",
+							{ scaleY: 0 },
+							{ scaleY: 1, duration: 1.8, ease: "none" },
+							0,
+						);
+				},
+			);
+
+			/* Identity text reveal — mobile: lighter blur, faster stagger, less y-travel */
+			media.add(
+				"(max-width: 767px) and (prefers-reduced-motion: no-preference)",
+				() => {
+					gsap
+						.timeline({
+							scrollTrigger: {
+								trigger: "[data-identity]",
+								start: "top top",
+								end: "bottom bottom",
+								scrub: 0.6,
+							},
+						})
+						.fromTo(
+							"[data-identity-word]",
+							{ filter: "blur(6px)", opacity: 0.15, yPercent: 30 },
+							{
+								filter: "blur(0px)",
+								opacity: 1,
+								yPercent: 0,
+								duration: 1,
+								ease: "none",
+								stagger: 0.06,
+							},
+							0,
+						)
+						.fromTo(
+							"[data-identity-progress]",
+							{ scaleY: 0 },
+							{ scaleY: 1, duration: 1.4, ease: "none" },
+							0,
+						);
+				},
+			);
 
 			media.add(
 				"(min-width: 768px) and (prefers-reduced-motion: no-preference)",

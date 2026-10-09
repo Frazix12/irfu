@@ -33,13 +33,7 @@ function OpeningScene() {
 				<p className="scene-caption" data-opening-caption>
 					Irfan Hossain · Dhaka, Bangladesh
 				</p>
-				<h1
-					id="hero-title"
-					aria-label={heroLines.flat().join(" ")}
-					data-cursor="EXPLORE"
-					data-cursor-icon="→"
-					data-cursor-mode="text"
-				>
+				<h1 id="hero-title" aria-label={heroLines.flat().join(" ")}>
 					{heroLines.map((line, lineIndex) => (
 						<Fragment key={line.join(" ")}>
 							<span className="hero-line">
@@ -70,7 +64,7 @@ function OpeningScene() {
 					</Link>
 					<Link
 						className="button button-outline"
-						href="#work"
+						href="#first-work"
 						data-cursor="VIEW"
 						data-cursor-icon="↓"
 					>
@@ -103,13 +97,7 @@ function IdentityScene() {
 				<p className="scene-caption">
 					One practice across software and hardware
 				</p>
-				<h2
-					id="identity-title"
-					aria-label={identityLabel}
-					data-cursor="STORY"
-					data-cursor-icon="T"
-					data-cursor-mode="text"
-				>
+				<h2 id="identity-title" aria-label={identityLabel}>
 					{identityLines.map((line, lineIndex) => (
 						<span data-identity-line key={line.join(" ")}>
 							{line.map((word, wordIndex) => (
@@ -151,14 +139,7 @@ function ProjectSequence() {
 		>
 			<header className="sequence-intro">
 				<p className="scene-caption">Selected work</p>
-				<h2
-					id="work-title"
-					data-cursor="ARCHIVE"
-					data-cursor-icon="04"
-					data-cursor-mode="text"
-				>
-					Four projects. One practice.
-				</h2>
+				<h2 id="work-title">Four projects. One practice.</h2>
 			</header>
 			<div className="project-scenes">
 				{projects.map((project, index) => (
@@ -166,17 +147,12 @@ function ProjectSequence() {
 						className={`project-scene tone-${project.tone}`}
 						data-project-scene
 						data-project-slug={project.slug}
+						id={index === 0 ? "first-work" : undefined}
 						key={project.slug}
 					>
 						<div className="project-scene-copy">
 							<p className="scene-caption">{project.field}</p>
-							<h3
-								data-cursor="PROJECT"
-								data-cursor-icon={String(index + 1).padStart(2, "0")}
-								data-cursor-mode="text"
-							>
-								{project.title}
-							</h3>
+							<h3>{project.title}</h3>
 							<p>{project.summary}</p>
 							<ProjectLinks project={project} />
 						</div>
@@ -188,6 +164,7 @@ function ProjectSequence() {
 							aria-label={`View ${project.title}`}
 							data-cursor="VIEW"
 							data-cursor-icon="↗"
+							data-cursor-image
 						>
 							<Image
 								src={project.image}
@@ -208,12 +185,7 @@ function FieldMontage() {
 	return (
 		<section className="field-montage" aria-labelledby="fields-title">
 			<p className="scene-caption">Built across disciplines</p>
-			<h2
-				id="fields-title"
-				data-cursor="FIELDS"
-				data-cursor-icon="+"
-				data-cursor-mode="text"
-			>
+			<h2 id="fields-title">
 				Products that move between pixels and physical systems.
 			</h2>
 			<div className="field-track" data-field-track>
@@ -236,14 +208,7 @@ function ContactScene() {
 			<p className="scene-caption">
 				Available for internships and freelance projects.
 			</p>
-			<h2
-				id="contact-title"
-				data-cursor="HELLO"
-				data-cursor-icon="@"
-				data-cursor-mode="text"
-			>
-				Let&apos;s build what comes next.
-			</h2>
+			<h2 id="contact-title">Let&apos;s build what comes next.</h2>
 			<Link
 				className="button button-dark"
 				href={socialLinks[0].href}
